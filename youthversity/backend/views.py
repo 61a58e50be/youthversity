@@ -85,3 +85,12 @@ def privacy(request):
 
 def faq(request):
     return render(request, 'faq.html')
+
+def me(request):
+    context = dict(
+        email=request.user.email,
+        username=request.user.be_user.name,
+        type=request.user.be_user.type,
+        language=request.user.user_be.language
+    )
+    return render(request, "me.html", context)

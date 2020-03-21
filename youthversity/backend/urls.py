@@ -20,5 +20,5 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
     path('imprint/', views.imprint, name='imprint'),
     path('privacy/', views.privacy, name='privacy'),
-    # path('me/', views.me, name='me'),
+    path('me/', views.me, name='me'),
 ]
