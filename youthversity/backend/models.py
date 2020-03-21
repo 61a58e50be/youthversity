@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User as AuthUser
 from django.db import models
 
 
@@ -15,18 +16,21 @@ class Feed(models.Model):
     interested_in_subjects = models.CharField(max_length=10)
 
 
-class User(CommonInfo):
+class User(models.Model):
+    auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+    last_edited = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=30)
     type = models.CharField(max_length=10)
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, null=True)
     language = models.CharField(max_length=2)
     saved_posts = models.ManyToManyField("Post")
     friends = models.ManyToManyField("self")
 
 
 class SchoolClass(CommonInfo):
-    teachers = models.ManyToManyField(User, null=True, related_name="school_classs_member")
-    students = models.ManyToManyField(User, null=True, related_name="school_classs_teaching")
+    teachers = models.ManyToManyField(User, related_name="school_classs_member")
+    students = models.ManyToManyField(User, related_name="school_classs_teaching")
     school_name = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
