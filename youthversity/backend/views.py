@@ -10,5 +10,5 @@ def feed(request):
 
 
 def topics(request):
-    context = {"subjects": list([s.name for s in Subject.objects.all()])}
+    context = {"subjects": Subject.objects.all()}
     return render(request, 'topics.html', context)
