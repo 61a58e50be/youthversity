@@ -29,8 +29,8 @@ class SchoolClass(CommonInfo):
 class ViolationReport(CommonInfo):
     content = models.TextField()
     answer = models.TextField(null=True)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    processor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="violation_reports_authored")
+    processor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="violation_reports_processed")
     done = models.BooleanField()
 
 class ContentBase(CommonInfo):
