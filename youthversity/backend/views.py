@@ -54,4 +54,7 @@ def projects_filter(request):
 
 
 def imprint(request):
-    return render(request, 'imprint.html')
+    return render(request, 'legal/imprint.html')
+
+def privacy(request):
+    return render(request, 'legal/privacy.html')
