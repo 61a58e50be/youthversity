@@ -2,11 +2,17 @@
 {% block content %}
 <div class="header">
     <h1>Index</h1>
-    <h2>Welcome to youthversity, user #{{ user }}</h2>
+    <h2>Welcome to youthversity, user #{{ user.be_user.name }}</h2>
 </div>
 
 <div class="content">
     <img alt="here should be a meme :(" src="https://pics.me.me/finally-t-works-memefaces-co-meme-faces-finally-it-works-53240738.png">
 </div>
+
+{{ user.password }}
+
+{{ user.username }}
+
+{{ user.email }}
 
 {% endblock %}

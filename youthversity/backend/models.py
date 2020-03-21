@@ -17,13 +17,13 @@ class Feed(models.Model):
 
 
 class User(models.Model):
-    auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now=True)
-    last_edited = models.DateTimeField(auto_now=True)
+    auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, related_name='be_user')
+    created = models.DateTimeField(auto_now=True, blank=True, null=True)
+    last_edited = models.DateTimeField(auto_now=True, blank=True, null=True)
     name = models.CharField(max_length=30)
-    type = models.CharField(max_length=10)
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, null=True)
-    language = models.CharField(max_length=2)
+    type = models.CharField(max_length=10, blank=True, null=True)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, blank=True, null=True)
+    language = models.CharField(max_length=2, blank=True, null=True)
     saved_posts = models.ManyToManyField("Post")
     friends = models.ManyToManyField("self")
 
@@ -37,16 +37,16 @@ class SchoolClass(CommonInfo):
 
 class ViolationReport(CommonInfo):
     content = models.TextField()
-    answer = models.TextField(null=True)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="violation_reports_authored")
-    processor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL,
+    answer = models.TextField(blank=True, null=True)
+    author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="violation_reports_authored")
+    processor = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,
                                   related_name="violation_reports_processed")
     done = models.BooleanField()
 
 
 class ContentBase(CommonInfo):
     content = models.TextField()
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="%(class)s_authored")
+    author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="%(class)s_authored")
     edited = models.BooleanField()
     type = models.CharField(max_length=10)
     upvotes = models.ManyToManyField(User)
