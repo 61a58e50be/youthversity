@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>Topics</h1>
+    <h2>All the topics</h2>
+</div>
+
+<div class="content">
+
+<ul>
+{% for subject in subjects %}
+    <li> {{ subject.name }} - {{ subject.id }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}

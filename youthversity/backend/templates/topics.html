@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>{% Post.title %}</h1>
+    <h2>By {% Post.author %}</h2>
+    {% if(Post.edited) %}
+        <h3>edited</h3>
+    {% endif %}
+</div>
+
+<div class="content">
+
+
+<p> {% Post.content %}
+
+
+</div>
+<div>Likes:{% Post.upvotes %}</div>
+
+{% endblock %}
