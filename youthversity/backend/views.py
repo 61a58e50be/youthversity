@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Post, Comment, CommentReply
+
 
 from .models import Subject, Post
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -17,6 +20,12 @@ def index(request):
 def feed(request):
     context = {}
     return render(request, 'feed.html', context)
+
+
+def projects_id(request,id):
+    url=request.path
+    context = {"Post":Post.objects.all()[id],"Comments":Comment.object.filter(parent=Post.objects.all()[id])}
+    return render(request,'project.html', context)
 
 
 @login_required
@@ -42,3 +51,7 @@ def projects_filter(request):
         return render(request, 'projects_filter.html', context)
 
     return HttpResponse('400 - Bad Request')
+
+
+def imprint(request):
+    return render(request, 'imprint.html')
