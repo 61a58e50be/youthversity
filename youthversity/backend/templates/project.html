@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>Topics</h1>
+    <h2>All the topics</h2>
+</div>
+
+<div class="content">
+
+  <h1>{ Post.title }</h1>
+      <h2>By { Post.author }</h2>
+      {% if(Post.edited) %}
+          <h3>edited</h3>
+      {% endif %}
+
+  {% for comment in Comments %}
+      <li> {{ comment.content }} - {{ comment.author }}</li>
+  {% endfor %}
+
+
+<p> {% Post.content %}
+
+<div>Likes:{% Post.upvotes %}</div>
+</div>
+
+{% endblock %}
