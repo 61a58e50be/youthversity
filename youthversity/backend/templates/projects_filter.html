@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>You search for: {{ query }}</h1>
+
+<div class="header">
+    <h1>Project Filter</h1>
+    <h2>Filtered posts</h2>
+</div>
+
+<div class="content">
+
+<ul>
+{% for post in posts %}
+    <li> {{ post.subject }} - {{ post.id }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}
