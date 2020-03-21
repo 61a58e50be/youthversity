@@ -1,0 +1,13 @@
+language: python
+python:
+  - 3.6
+  - 3.7
+  - 3.8
+# install dependencies
+install:
+  - pip install -r requirements.txt
+
+# run tests
+script:
+  - cd youthversity
+  - python manage.py test
