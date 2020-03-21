@@ -26,6 +26,13 @@ class SchoolClass(CommonInfo):
     school_name = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
+class ViolationReport(CommonInfo):
+    content = models.TextField()
+    answer = models.TextField(null=True)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    processor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    done = models.BooleanField()
+
 class ContentBase(CommonInfo):
     content = models.TextField()
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="%(class)s_authored")
