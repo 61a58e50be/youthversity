@@ -36,7 +36,7 @@ def signup(request):
 # Create your views here.
 @login_required
 def index(request):
-    context = dict(user=request.user)
+    context = dict(user=request.user.be_user)
     return render(request, 'index.html', context=context)
 
 
