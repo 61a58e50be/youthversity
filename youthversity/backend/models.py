@@ -21,14 +21,14 @@ class User(CommonInfo):
     friends = models.ManyToManyField("self")
 
 class SchoolClass(CommonInfo):
-    teachers = models.ManyToManyField(User)
-    students = models.ManyToManyField(User)
+    teachers = models.ManyToManyField(User, null=True, related_name="school_classs_member")
+    students = models.ManyToManyField(User, null=True, related_name="school_classs_teaching")
     school_name = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
 class ContentBase(CommonInfo):
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="%(class)s_authored")
     edited = models.BooleanField()
     type = models.CharField(max_length=10)
     upvotes = models.ManyToManyField(User)
@@ -42,7 +42,7 @@ class Post(ContentBase):
     visibility = models.CharField(max_length=10)
 
 class Comment(ContentBase):
-    parent = models.ForeignKey(Post, on_delete=models.CASCADE)
+    parent = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="childs")
 
 class CommentReply(ContentBase):
-    parent = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    parent = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="childs")
