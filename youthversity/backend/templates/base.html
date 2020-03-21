@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static "sidemenu.css" %}">
+
+
+
+</head>
+<body>
+
+<div id="layout">
+  <div id="menu">
+    <div class="pure-menu">
+        <a class="pure-menu-heading" href="#">Youthversity</a>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Main Feed</a></li>
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Themen</a></li>
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Beliebte Projekte</a></li>
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Beobachtete Projekte</a></li>
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Meine Projekte</a></li>
+
+            <!-- <li class="pure-menu-item menu-item-divided pure-menu-selected">
+                <a href="#" class="pure-menu-link">Services</a>
+            </li> -->
+
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Impressum</a></li>
+        </ul>
+    </div>
+  </div>
+  <div id="main">
+        {% block content %}
+        {% endblock %}
+      </div>
+  </div>
+
+  <script src="{% static "ui.js" %}"></script>
+
+
+  <div>
+  Footer
+  </div>
+
+
+</body>
+</html>
