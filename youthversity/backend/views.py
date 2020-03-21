@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User
+from .models import Subject, Post, User, CommentReply
 from .forms import SignUpForm
 
 
@@ -49,6 +49,12 @@ def feed(request):
     return render(request, 'feed.html', context)
 
 
+def projects_id(request,id):
+    url=request.path
+    context = {"Post":Post.objects.all()[id],"Comments":Comment.object.filter(parent=Post.objects.all()[id])}
+    return render(request,'project.html', context)
+
+
 @login_required
 def topics(request):
     context = {"subjects": Subject.objects.all()}
@@ -75,4 +81,10 @@ def projects_filter(request):
 
 
 def imprint(request):
-    return render(request, 'imprint.html')
+    return render(request, 'legal/imprint.html')
+
+def privacy(request):
+    return render(request, 'legal/privacy.html')
+
+def faq(request):
+    return render(request, 'faq.html')
