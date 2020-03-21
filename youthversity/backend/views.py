@@ -14,9 +14,8 @@ def feed(request):
 
 def projects_id(request,id):
     url=request.path
-    context = {"Post":Post.objects.all()[id]}
-
-    return HttpResponse(id)#render(request,'project.html', context)
+    context = {"Post":Post.objects.all()[id],"Comments":Comment.object.filter(parent=Post.objects.all()[id])}
+    return render(request,'project.html', context)
 
 
 def topics(request):
