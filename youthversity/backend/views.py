@@ -58,3 +58,6 @@ def imprint(request):
 
 def privacy(request):
     return render(request, 'legal/privacy.html')
+
+def faq(request):
+    return render(request, 'faq.html')

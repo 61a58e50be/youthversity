@@ -16,6 +16,7 @@ urlpatterns = [
     # path('projects/saved/', views.projects_saved, name='projects_saved'),
     # path('comments/my/', views.comments_my, name='comments_my'),
     # path('help/', views.help, name='help'),
+    path('faq/', views.faq, name='faq'),
     path('imprint/', views.imprint, name='imprint'),
     path('privacy/', views.privacy, name='privacy'),
     # path('me/', views.me, name='me'),
