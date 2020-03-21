@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('feed/', views.feed, name='feed'),
-    # path('topics/', views.topics, name='topics'),
+    path('topics/', views.topics, name='topics'),
     # path('projects/all/', views.projects_all, name='projects_all'),
     # path('projects/my/', views.projects_my, name='projects_my'),
     # path('projects/new/', views.projects_new, name='projects_new'),
