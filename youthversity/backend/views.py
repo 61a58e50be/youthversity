@@ -42,3 +42,7 @@ def projects_filter(request):
         return render(request, 'projects_filter.html', context)
 
     return HttpResponse('400 - Bad Request')
+
+
+def imprint(request):
+    return render(request, 'imprint.html')
