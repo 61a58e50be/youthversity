@@ -1297,7 +1297,7 @@ since IE8 won't execute CSS that contains a CSS3 selector.
 .pure-menu-heading {
     display: block;
     text-decoration: none;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 /* HORIZONTAL MENU */
