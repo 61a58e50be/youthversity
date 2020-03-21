@@ -36,9 +36,6 @@ def signup(request):
 # Create your views here.
 @login_required
 def index(request):
-    # user = User.objects.filter(auth_user=request.user)
-    # print(user)
-    print(request.user.be_user)
     context = dict(user=request.user)
     return render(request, 'index.html', context=context)
 
