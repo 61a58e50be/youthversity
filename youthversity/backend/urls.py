@@ -13,7 +13,7 @@ urlpatterns = [
     # path('projects/<int: id>/new_comment', views.project_new_comment, name='project_new_comment'),
     # path('projects/saved/', views.projects_saved, name='projects_saved'),
     # path('comments/my/', views.comments_my, name='comments_my'),
-    # path('help/', views.help, name='help'),
+    path('help/', views.help, name='help'),
     # path('imprint/', views.imprint, name='imprint'),
     # path('me/', views.me, name='me'),
 ]
