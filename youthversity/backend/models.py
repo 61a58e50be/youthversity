@@ -15,7 +15,7 @@ class Feed(models.Model):
 class User(CommonInfo):
     name = models.CharField(max_length=30)
     type = models.CharField(max_length=10)
-    feed = models.ForeignKey(Feed)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     language = models.CharField(max_length=2)
     saved_posts = models.ManyToManyField("Post")
     friends = models.ManyToManyField("self")
