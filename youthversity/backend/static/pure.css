@@ -1288,7 +1288,7 @@ since IE8 won't execute CSS that contains a CSS3 selector.
 }
 
 .pure-menu-item {
-    padding: 0;
+    padding: 2px;
     margin: 0;
     height: 100%;
 }
