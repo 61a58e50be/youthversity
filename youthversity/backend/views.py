@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.shortcuts import render, redirect
 
 from .forms import ReportForm, CommentCreationForm
+from django.urls import reverse
 from .forms import SignUpForm
 from .models import Subject, Post, User, Comment, ViolationReport
 
@@ -51,6 +52,17 @@ def topics(request):
     context = {"subjects": Subject.objects.filter(parent=None)}
     return render(request, 'topics.html', context)
 
+
+def subtopics(request, id):
+    childs = Subject.objects.filter(parent=id)
+    if not childs:
+        url = reverse('projects_filter') + "?topics={}".format(id)
+        return HttpResponseRedirect(url)
+    context = {
+        "subjects": childs,
+        "parent": Subject.objects.get(pk=id),
+        }
+    return render(request, 'subtopics.html', context)
 
 @login_required
 def projects_filter(request):
