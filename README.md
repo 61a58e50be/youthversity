@@ -4,105 +4,82 @@
 
 Eine Onlineplattform für Schüler zur Erstellung und dem gegenseitigen Austausch von Projekten.
 
-
+Entstanden im Rahmen von:
 ![#wirvsvirus logo](docs/wirvsvirus_logo.png)
 
 
 
 
-## Datamodel
+
+### Installation
+
+The project is build with python3 and django. For set up in your environment, clone the git repository and then
+
+```bash
+# create a venv
+python3 -m venv venv
+# activate the venv (linux + mac)
+source venv/bin/activate
+# install requirements
+pip install -r requirement.txt
+# change in the django root folder
+cd youthversity
+# create the database
+python manage.py migrate
+# start the server
+python manage.py runserver
+```
+
+Afterwards, the server is running locally at http://127.0.0.1:8000. Access this via a webrowser and sign up for an account at http://127.0.0.1:8000/signup/ - the email address is not checked, so feel free to use `a@a.a`.
 
 
 
-- Content types
+### Contribution
 
-  - Text
-  - Slides
-  - Bilder
-  - Videos
-
-- Kategorien / Themenbereiche
-
-- User Accounts
-
-  - Types Schüler/Lehrer
-
-
-
-
-
-## Design
-
-Website
-
-​	- Python3, Django
-
-
-
-Textinhalte einfach als Markdown/WYSIWYG eingeben und in DB speichern.
-
-Bilder auf einem Fileserver
-
-
-
-### Funktionalitäten
-
-- Login
-- Registrierung  + Accounts
-  - Lehrer- und SchülerAccounts
-- Post erstellen, berarbeiten + löschen
-- Posts kommentieren
-  - reddit Style?
-- Voting System für Posts
-  - nur Upvotes
-  - hinzufügen und entfernen eines eigenen Likes
-- Melden von Posts
-- Themen-Kategorien für Posts
-  - erstmal nur Schulfächer
-- personalisierte Feed?
-  - Fächer abonnieren?
-- Posts sich selber speichern
-- Anzeige
-  - Filter nach Kategorien, Sprachen?
-  - Suche nach Titel
-  - sortieren nach Erstellungsdatum
-  - etc
-- Frontend mit adaptive resizing
-- Lokalisierung? i18n
-
-## First Steps
-
-1. Datenmodell entwerfen
-2. Django Grundstuktur
-3.
-
-
-
-## Sonstiges
-
-- Moderation
-  - melden-Funktion
-- Kommentare zu jedem Post/Lerneinheit
-- Lehrer?
-  - Können auch eine Hürde darstellen für Schüler.
-  - Sollten vllt nicht an ihre Klasse gebunden sein, sondern wild durch die Plattform durch moderieren?
-- Wikipedia-Prinzip für mehr Rechte, für die, die besondern hervorstehen?
-- Warum lädt überhaupt jemand was hoch?
-  - Lehrer schicken es an ihre Klassen?
-  - Klassen eventuell repräsentiert im System?
-    - Sichtbarkeit von Beitragen default lieber nicht auf Klassen beschränkt.
-- Emojis freischalten durch (gute?) Posts - Gamification und Ansporn für die Schüler, auch Inhalte zu produzieren.
-- verifizierte Antworten in Threads hervorheben? -> wie bei Stackoverflow
-- Forum für Diskussionen/Fragen zu klären beim Erstellen von Posts
-- Beiträge auch nach Themen/Kategorien sortieren/anzeigen
-- Einladungslinks für Lehrer, den sie an ihre Schüler geben können.
--
+Issues, Pull Requests or any kind of support are welcomed.
 
 
 
 
 
-## Zukünftige Ideen
 
-- Kollaboration
-- Lehrer verifizieren
+### Functionality
+
+- student accounts
+- creation of own text posts
+- comment on posts
+- favorite posts
+- report comments
+- school subject based categories for posts
+- personalised feed
+- mobile friendly UI
+
+
+
+### Roadmap
+
+- teacher accounts
+
+- optional class representation
+
+  - invitation links teachers can generate for their class
+
+- befriend other users
+
+- visibility settings for posts
+
+- file upload for posts
+
+- Emoji access rewards for active users?
+
+- verification for posts?
+
+- discussion board for clarificatio nand help to create an own post
+
+- collaboration for post creation
+
+- drafts for post creations
+
+  
+
+

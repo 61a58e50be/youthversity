@@ -5,13 +5,19 @@
 </div>
 
 <div class="content">
-<ul>
-  {% for comment in Comments %}
-      <li>
-      <h2>{{ comment.content }}</h2><br>
-      </li>
-  {% endfor %}
-</ul>
+  <div class="pure-g">
+    {% for comment in Comments %}
+    <div class="pure-u-1 pure-u-md-1-2">
+      <a href="{% url 'projects_id' comment.get_parent_post.id %}" style="text-decoration: none;  color: #aaa ;">
+        <div class="youthversity-comment-box-single">
+          <label class="youthversity-comment-author">{{ comment.parent.title }} </label>
+          <label class="youthversity-comment-date">{{ comment.created }} </label><br>
+          <div class="youthversity-comment-content">{{ comment.content }} </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

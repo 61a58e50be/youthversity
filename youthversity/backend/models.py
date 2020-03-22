@@ -76,6 +76,12 @@ class Post(ContentBase):
 class Comment(ContentBase):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="childs")
 
+    def get_parent_post(self):
+        return self.parent
+
 
 class CommentReply(ContentBase):
     parent = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="childs")
+
+    def get_parent_post(self):
+        return self.parent.parent
