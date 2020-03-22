@@ -16,6 +16,8 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
  *    without disabling user zoom.
  */
 
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One%7CRaleway&display=swap%27');
+
 html {
   font-family: sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
@@ -28,10 +30,15 @@ html {
 
 body {
   margin: 0;
+  font-family: 'Julius Sans One', sans-serif;
 }
 
 content {
   margin-top: 20;
+}
+
+.content {
+  font-family: 'Raleway', sans-serif;
 }
 
 /* HTML5 display definitions
@@ -493,7 +500,7 @@ th {
 
     * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.
     */
-    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+    /* font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif; */
 
     /* Use flexbox when possible to avoid `letter-spacing` side-effects. */
     display: -webkit-box;
@@ -543,7 +550,7 @@ Resets the font family back to the OS/browser's default sans-serif font,
 this the same font stack that Normalize.css sets for the `body`.
 */
 .pure-g [class *= "pure-u"] {
-    font-family: sans-serif;
+    /* font-family: sans-serif; */
 }
 
 .pure-u-1,

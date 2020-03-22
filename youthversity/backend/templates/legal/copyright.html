@@ -1,16 +1,17 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Copyright</title>
-  </head>
-  <body>
-    <h1 style="color:blue;text-align:center;"> Urheberrecht </h1>
-    <h2>Auch auf unserer Plattform gilt natürlich das Urheberrecht, welches ihr bei der Veröffentlichung von Projekten und Beiträgen berücksichtigen müsst. Damit ihr wisst, welche Inhalte ihr hier veröffentlichen dürft und worauf ihr dabei achten solltet, geben wir euch hier ein paar Hinweise zu dem Thema.</h2><br>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="header">
+    <h1>Urheberrecht</h1>
+    <!-- <h2>Seems, there is something missing?</h2> -->
+</div>
+
+<div class="content">
+    <h3>Auch auf unserer Plattform gilt natürlich das Urheberrecht, welches ihr bei der Veröffentlichung von Projekten und Beiträgen berücksichtigen müsst. Damit ihr wisst, welche Inhalte ihr hier veröffentlichen dürft und worauf ihr dabei achten solltet, geben wir euch hier ein paar Hinweise zu dem Thema.</h3><br>
     <ol>
         <li>Quellenangaben: wenn ihr bei der Erstellung eurer Projekte auf Inhalte anderer zurückgreifen wollt, solltet ihr eine Quelle angeben, also nennen, was genau ihr von wem verwendet habt. Bedenkt hierbei, dass ihr auch mit Quellenangaben nicht alle Materialien einfach so benutzen dürft, zum Beispiel solltet ihr nicht einfach Fotos von Seiten aus euren Schulbüchern hier hochladen. Näheres dazu findet ihr unter erlaubte Materialien. Eine Quellenangabe ist auch dann notwendig, wenn ihr euch auf ein Buch bezieht, das ihr gelesen habt (wenn ihr zum Beispiel eine Charakterisierung zu Gretchen aus Goethes "Faust" schreibt, wäre die Lektürehilfe zu "Faust" eure Quelle) oder wenn ihr Informationen wiedergebt, die ihr beispielsweise auf Wikipedia gelesen habt, auch wenn ihr nicht direkt zitiert, sondern nur zusammenfasst. Wenn ihr Internetquellen zitiert, solltet ihr diese außerdem verlinken, so dass man direkt auf eure Quellen zugreifen kann.</li>
         <li> Erlaubte Materialien: Es gibt viele Inhalte, die frei verfügbar sind und die ihr mit Quellen- und Lizenzangaben  in euren Projekte weiterverwenden dürft, zum Beispiel Wikipedia. Was ihr komplett selbst erstellt habt, könnt ihr natürlich auch frei benutzen. Bei anderen Inhalten müsst ihr vorsichtiger sein, da sie urheberrechtlich geschützt sind und sie nicht einfach so im Internet verbreitet werden dürfen. Was ihr grundsätzlich nicht dürft, ist Inhalte Dritter einfach so hochzuladen. Diese Seite ist eine Sammlung für eure eigenen Projekte, nicht für Lernmaterialien, die ihr irgendwo gefunden habt (und die vermutlich in den meisten Fällen sowieso urheberrechtlich geschützt sind und somit nicht verbreitet werden dürfen). Wenn ihr unsicher seid, ob ihr etwas verwenden dürft, fragt am besten eure Eltern, Lehrer oder andere Erwachsene in eurem Umfeld. Wobei ihr generell aufpassen solltet: nur weil etwas im Internet steht, heißt das noch lange nicht, dass man es einfach verwenden darf - es darf ja zum Beispiel auch niemand einfach so eure Projekte woanders hochladen. Passt dabei also besonders auf!</li>
     </ol>
-  </body>
-</html>
+</div>
+{% endblock %}
