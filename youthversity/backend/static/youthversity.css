@@ -7,3 +7,35 @@
 .youthversity-faq-answer {
   margin-bottom: 15px
 }
+
+.post-overview-all {
+  background-color: #93c0c3;
+  margin: 0.5em;
+  padding: 0.5em;
+  color: black;
+  word-wrap: normal;
+}
+
+.post-overview-title{
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+
+.post-overview-author-name {
+  color: #444;
+  text-align: right;
+  width: 100%;
+  display: inline-block;
+}
+
+.post-overview-subject {
+  text-align: right;
+  width: 49%;
+  display: inline-block;
+}
+
+.post-overview-upvotes {
+  width: 49%;
+  display: inline-block;
+}

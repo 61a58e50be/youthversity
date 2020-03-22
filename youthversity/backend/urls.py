@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('feed/', views.feed, name='feed'),
     path('topics/', views.topics, name='topics'),
+    path('topics/<int:id>/subtopics/', views.subtopics, name='subtopics'),
     path('projects/filter/', views.projects_filter, name='projects_filter'),
     path('projects/all/', views.projects_all, name='projects_all'),
     path('projects/my/', views.projects_my, name='projects_my'),
@@ -28,4 +29,6 @@ urlpatterns = [
     path('copyright/', views.copyright, name='copyright'),
     path('profile/', views.me, name='profile'),
     path('comment/<int:id>/report', views.report_comment, name='profile'),
+    path('upvote_post/<int:id>/', views.upvote_post, name='upvote_post'),
+    path('upvote_comment/<int:id>/', views.upvote_comment, name='upvote_comment'),
 ]

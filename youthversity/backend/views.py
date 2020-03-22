@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.shortcuts import render, redirect
 
 from .forms import ReportForm, CommentCreationForm
+from django.urls import reverse
 from .forms import SignUpForm
 from .models import Subject, Post, User, Comment, ViolationReport
 
@@ -54,6 +55,17 @@ def topics(request):
     context = {"subjects": Subject.objects.filter(parent=None)}
     return render(request, 'topics.html', context)
 
+
+def subtopics(request, id):
+    childs = Subject.objects.filter(parent=id)
+    if not childs:
+        url = reverse('projects_filter') + "?topics={}".format(id)
+        return HttpResponseRedirect(url)
+    context = {
+        "subjects": childs,
+        "parent": Subject.objects.get(pk=id),
+        }
+    return render(request, 'subtopics.html', context)
 
 @login_required
 def projects_filter(request):
@@ -174,6 +186,31 @@ def project_new_comment(request, id):
         form = CommentCreationForm()
 
     return render(request, 'project_new_comment.html', {'form': form, "id": id})
+
+
+@login_required
+def upvote_post(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Post.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../projects/{}/'.format(id))
+
+@login_required
+def upvote_comment(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Comment.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../comments/{}/'.format(id))
 
 
 def projects_all(request):
