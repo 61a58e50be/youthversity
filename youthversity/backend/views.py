@@ -282,19 +282,20 @@ def upvote_post(request, id):
     except Exception as err:
         return render(request, '404.html')
 
-    return redirect('../projects/{}/'.format(id))
+    return redirect(reverse('projects_id', kwargs={"id":id}))
 
 @login_required
 def upvote_comment(request, id):
     user = request.user.be_user
 
     try:
-        curr_upvotes = Comment.objects.filter(pk=id)[0].upvotes
+        comment = Comment.objects.filter(pk=id)[0]
+        curr_upvotes = comment.upvotes
         curr_upvotes.add(user)
     except Exception as err:
         return render(request, '404.html')
 
-    return redirect('../comments/{}/'.format(id))
+    return redirect(reverse('projects_id', kwargs={"id":comment.parent.id}))
 
 
 def projects_all(request):
