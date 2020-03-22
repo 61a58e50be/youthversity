@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>Regeln</h1>
+    <!-- <h2>All your interesting stuff</h2> -->
+</div>
+
+<div class="content">
+  <h3> Projektregeln </h3>
+    <ol>
+      <li> Achte beim Erstellen deines Projekts auf die Urheberrechtsrichtlinien (Link).
+      <li> Du kannst natürlich gerne mehrere Beiträge zu dem gleichen Thema schreiben – lade einzelne Beiträge aber bitte nicht mehrfach hoch. Wenn du einen alten Beitrag verbessern willst, kannst du ihn nachträglich noch bearbeiten, du musst ihn also auch nicht löschen und neu hochladen. Wenn du mit anderen gemeinsam an einem Projekt gearbeitet hast, sollte eine Person das Projekt hochladen und in der Beschreibung alle anderen nennen, die daran mitgearbeitet haben.
+      <li> Poste keine Projekte anderer Nutzer, auch dann nicht, wenn der Nutzer den Beitrag bei sich gelöscht hat. Gleiches gilt allgemein für Projekte, die du nicht selber erstellt hast, wenn du keine ausdrückliche Erlaubnis dafür hast.
+      <li> Beachte den <a href='{% url 'project_guidelines' %}'>Leitfaden für die Projekterstellung</a>.
+    </ol>
+
+  <h3> Kommentarregeln</h3>
+  <ol>
+      <li>Sei freundlich und respektvoll. Diejenigen, die hier etwas hochladen, arbeiten in ihrer Freizeit an den Projekten und stecken viel Arbeit hinein – behalte das beim Verfassen deiner Kommentare im Hinterkopf. Auch in Diskussionen unter den Projekten solltest du auf einen freundlichen Umgangston achten.</li>
+      <li>Formuliere Kritik konstruktiv. Wenn in dem Projekt Fehler sind oder du etwas anders machen würdest, sage nicht nur, was du schlecht findest, sondern mach auch Lösungs- oder Verbesserungsvorschläge.</li>
+      <li>Akzeptiere andere Meinungen. Nicht jeder Ersteller wird sein Projekt ändern wollen und nicht alle anderen Community-Mitglieder werden dir immer zustimmen. Angeregte Diskussionen sind natürlich gern gesehen, aber bedenke, dass das Ziel der Austausch ist und nicht, alle anderen von deiner persönlichen Meinung zu überzeugen.</li>
+      <li>Melde Kommentare, die gegen die Regeln verstoßen. Rassismus, Sexismus, Homophobie und Beleidigungen jeglicher Art werden hier nicht toleriert. Wenn du siehst, dass jemand andere beleidigt oder unfreundlich ist, informiere uns, damit wir möglichst schnell eingreifen können.</li>
+  </ol>
+</div>
+
+{% endblock %}

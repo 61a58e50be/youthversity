@@ -35,21 +35,17 @@
             <li class="pure-menu-item"><a href="#" class="pure-menu-link">Beliebte Projekte</a></li>
             <li class="pure-menu-item"><a href="{% url 'projects_all' %}" class="pure-menu-link">Alle Projekte</a></li>
             {% if user.is_authenticated %}
-              <li class="pure-menu-item"><a href="{% url 'projects_my' %}" class="pure-menu-link">Meine Projekte</a></li>
-              <li class="pure-menu-item"><a href="{% url 'projects_new' %}" class="pure-menu-link">Neues Projekt</a></li>
-              <li class="pure-menu-item"><a href="{% url 'comments_my' %}" class="pure-menu-link">Meine Beiträge</a></li>
-              <li class="pure-menu-item"><a href="{% url 'projects_saved' %}" class="pure-menu-link">Beobachtete Projekte</a></li>
+            <li class="pure-menu-item"><a href="{% url 'projects_saved' %}" class="pure-menu-link">Beobachtete Projekte</a></li>
+            <li class="pure-menu-item"><a href="{% url 'projects_new' %}" class="pure-menu-link">Neues Projekt</a></li>
+            <li class="pure-menu-item"><a href="{% url 'projects_my' %}" class="pure-menu-link">Meine Projekte</a></li>
+            <li class="pure-menu-item"><a href="{% url 'comments_my' %}" class="pure-menu-link">Meine Beiträge</a></li>
             {% endif %}
 
-            <!-- <li class="pure-menu-item menu-item-divided pure-menu-selected">
-                <a href="#" class="pure-menu-link">Services</a>
-            </li> -->
-            <li class="pure-menu-item"><a href="{% url 'faq' %}" class="pure-menu-link">FAQs</a></li>
-            <!-- <li class="pure-menu-item"><a href="#" class="pure-menu-link">Hilfe</a></li> -->
-            <li class="pure-menu-item"><a href="{% url 'comment_guidelines' %}" class="pure-menu-link">Kommentar-Regeln</a></li>
+            <li class="pure-menu-item"><a href="{% url 'rules' %}" class="pure-menu-link">Regeln</a></li>
+            <li class="pure-menu-item"><a href="{% url 'project_guidelines' %}" class="pure-menu-link">Leitfaden Projekterstellung</a></li>
             <li class="pure-menu-item"><a href="{% url 'copyright' %}" class="pure-menu-link">Urheberrecht</a></li>
-            <li class="pure-menu-item"><a href="{% url 'privacy' %}" class="pure-menu-link">Datenschutz</a></li>
-            <li class="pure-menu-item"><a href="{% url 'imprint' %}" class="pure-menu-link">Impressum</a></li>
+            <li class="pure-menu-item"><a href="{% url 'faq' %}" class="pure-menu-link">FAQs</a></li>
+            <li class="pure-menu-item"><a href="{% url 'about_us' %}" class="pure-menu-link">Über uns</a></li>
             {% if user.is_authenticated %}
               <li class="pure-menu-item"><a href="{% url 'logout' %}" class="pure-menu-link">Logout</a></li>
             {% endif %}
@@ -65,10 +61,12 @@
   <script src="{% static "ui.js" %}"></script>
 
 
-  <div>
-  Footer
+  <div class="youthversity-footer">
+    <center>
+      <a href="{% url 'privacy' %}">Datenschutz</a>
+      <a href="{% url 'imprint' %}">Impressum</a>
+    </center>
   </div>
-
 
 </body>
 </html>

@@ -33,8 +33,8 @@
 }
 
 .post-overview-subject {
-  text-align: right;
-  width: 49%;
+  float: right;
+  width: 20%;
   display: inline-block;
   text-decoration: none;
   color: #black;
@@ -86,4 +86,19 @@
 
 .youthversity-upvote-box {
   float: right;
+}
+
+.youthversity-footer {
+  font-size: x-small;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  padding: 10px;
+}
+
+.youthversity-footer a {
+  color: #aaa;
+  margin: 20px 3px;
+
 }

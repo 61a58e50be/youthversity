@@ -61,6 +61,9 @@ class Subject(models.Model):
     name = models.CharField(max_length=40)
     parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL, related_name="childs")
 
+    def get_parent(self):
+        return self.parent if self.parent else self
+
 
 
 class Post(ContentBase):

@@ -119,8 +119,7 @@ def feed(request):
 def projects_id(request, id):
 
     post = Post.objects.get(pk=id)
-    value=post.calls
-    post.calls=value+1
+    post.calls += 1
     post.save()
     context = {
         "Post": post,
@@ -187,8 +186,8 @@ def me(request):
     return render(request, 'me.html', context)
 
 
-def comment_guidelines(request):
-    return render(request, 'legal/comment_guidelines.html')
+def rules(request):
+    return render(request, 'legal/rules.html')
 
 def project_guidelines(request):
     return render(request, 'legal/project_guidelines.html')
