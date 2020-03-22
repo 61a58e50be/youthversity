@@ -4,9 +4,10 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.shortcuts import render, redirect
 
 from .forms import ReportForm, CommentCreationForm
-from django.urls import reversefrom .forms import SignUpForm
-from .models import Subject, Post, User, Comment, ViolationReport
 from django.urls import reverse
+from .forms import SignUpForm
+from .models import Subject, Post, User, Comment, ViolationReport
+
 
 def signup(request):
     if request.method == 'POST':
