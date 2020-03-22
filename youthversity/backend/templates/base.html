@@ -46,6 +46,8 @@
             </li> -->
             <li class="pure-menu-item"><a href="{% url 'faq' %}" class="pure-menu-link">FAQs</a></li>
             <!-- <li class="pure-menu-item"><a href="#" class="pure-menu-link">Hilfe</a></li> -->
+            <li class="pure-menu-item"><a href="{% url 'comment_guidelines' %}" class="pure-menu-link">Kommentar-Regeln</a></li>
+            <li class="pure-menu-item"><a href="{% url 'copyright' %}" class="pure-menu-link">Urheberrecht</a></li>
             <li class="pure-menu-item"><a href="{% url 'privacy' %}" class="pure-menu-link">Datenschutz</a></li>
             <li class="pure-menu-item"><a href="{% url 'imprint' %}" class="pure-menu-link">Impressum</a></li>
             {% if user.is_authenticated %}
