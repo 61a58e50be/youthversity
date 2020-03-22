@@ -7,6 +7,9 @@ from .forms import ReportForm, CommentCreationForm
 from .forms import SignUpForm
 from .models import Subject, Post, User, Comment, ViolationReport
 
+from .ownUtilities.servermail import serverStatus
+
+
 
 def signup(request):
     if request.method == 'POST':
@@ -43,7 +46,7 @@ def feed(request):
 
 
 def projects_id(request, id):
-    context = {"Post": Post.objects.all()[id], "Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
+    context = {"Post": Post.objects.filter(pk=id)[0],"Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
     return render(request, 'project.html', context)
 
 
@@ -142,7 +145,8 @@ def report(request, id):
         # check whether it's valid:
         if form.is_valid():
             msg = form.cleaned_data.get('message')
-            ViolationReport(content=msg, author=request.user.be_user, done=False).save()
+            ViolationReport(content=msg, author=request.user.be_user, done=False, flagged_type='project', content_id=id).save()
+            serverStatus('New Violation report:'+msg+'for project'+str(id))
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form
@@ -175,3 +179,22 @@ def project_new_comment(request, id):
 def projects_all(request):
     context = dict(posts=Post.objects.all())
     return render(request, 'projects_all.html', context=context)
+
+def report_comment(request, id):
+    def report(request, id):
+        # if this is a POST request we need to process the form data
+        if request.method == 'POST':
+            # create a form instance and populate it with data from the request:
+            form = ReportForm(request.POST)
+            # check whether it's valid:
+            if form.is_valid():
+                msg = form.cleaned_data.get('message')
+                ViolationReport(content=msg, author=request.user.be_user, done=False,flagged_type='comment', content_id=id).save()
+                serverStatus('New Violation report:' + msg + 'for project' + str(id))
+                return HttpResponse('Thanks for submitting, your report will be processed')
+
+        # if a GET (or any other method) we'll create a blank form
+        else:
+            form = ReportForm()
+
+        return render(request, 'legal/report_comment.html', {'form': form, "id": id})

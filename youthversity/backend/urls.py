@@ -27,5 +27,5 @@ urlpatterns = [
     path('about_us/', views.about_us, name='about_us'),
     path('copyright/', views.copyright, name='copyright'),
     path('profile/', views.me, name='profile'),
-
+    path('comment/<int:id>/report', views.report_comment, name='profile'),
 ]
