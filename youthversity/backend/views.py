@@ -1,13 +1,12 @@
-
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User, CommentReply, Comment, ViolationReport
-from .forms import SignUpForm
 from .forms import ReportForm, CommentCreationForm
+from .forms import SignUpForm
+from .models import Subject, Post, User, Comment, ViolationReport
+
 
 def signup(request):
     if request.method == 'POST':
@@ -19,7 +18,6 @@ def signup(request):
             username = form.cleaned_data.get('username')
             if not username:
                 raise HttpResponseBadRequest('Username empty.')
-
 
             be_user = User(name=username, auth_user=auth_user)
             be_user.save()
@@ -47,7 +45,6 @@ def feed(request):
 def projects_id(request, id):
     context = {"Post": Post.objects.all()[id], "Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
     return render(request, 'project.html', context)
-
 
 
 def topics(request):
@@ -117,12 +114,14 @@ def comments_my(request):
     )
     return render(request, 'comments_my.html', context)
 
+
 @login_required
 def projects_my(request):
     context = dict(
         Projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
+
 
 @login_required
 def projects_saved(request):
@@ -148,7 +147,7 @@ def report(request, id):
     else:
         form = ReportForm()
 
-    return render(request, 'legal/report.html', {'form': form,"id":id})
+    return render(request, 'legal/report.html', {'form': form, "id": id})
 
 
 @login_required
@@ -159,14 +158,18 @@ def project_new_comment(request, id):
         form = CommentCreationForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            post=Post.objects.all()[id]
-            text=request.POST.get('content')
-            print(text)
-            Comment.objects.create(parent=post,author=request.user.be_user,edited=False,content=text,type='comment')
-            return HttpResponseRedirect('/projects/'+str(id))
+            post = Post.objects.all()[id]
+            text = request.POST.get('content')
+            Comment.objects.create(parent=post, author=request.user.be_user, edited=False, content=text, type='comment')
+            return HttpResponseRedirect('/projects/' + str(id))
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = CommentCreationForm()
 
     return render(request, 'project_new_comment.html', {'form': form, "id": id})
+
+
+def projects_all(request):
+    context = dict(posts=Post.objects.all())
+    return render(request, 'projects_all.html', context=context)
