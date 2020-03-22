@@ -48,36 +48,37 @@ def feed(request):
     userPosts = Post.objects.filter(author=user)
     userComments = Comment.objects.filter(author=user)
     subjects = Subject.objects.all()
+
     # create list containing importance-values of all subjects
     values = []
     for i in range(len(subjects)):
         values.append(0)
-        
+
     for post in userPosts:
         values[subjects.index(post.subject)] += 3
-        
+
     for comment in userComments:
         values[subjects.index(comment.parent.subject)] += 1
-    
+
     # get three most important subjects
     feedSubjects = []
-    
+
     if max(values) == 0:
         randNums = random.sample(range(0, len(subjects)), 3)
         for n in randNums:
             feedSubjects.append(subjects[n])
-            
+
     else:
         for i in range(3):
             feedSubjects.append(subjects[values.index(max(values))])
             values[values.index(max(values))] = 0
-    
+
     # select posts
     feedPosts1 = Post.objects.order_by('-created')[4]
     feedPosts2 = Post.objects.order_by('-created')[3]
     feedPosts3 = Post.objects.order_by('-created')[3]
     feedPosts = feedPosts1 + feedPosts2 + feedPosts3
-    
+
     context = {feedPosts : feedPosts}
     return render(request, 'feed.html', context)
 
