@@ -57,6 +57,8 @@ class ContentBase(CommonInfo):
 
 class Subject(models.Model):
     name = models.CharField(max_length=40)
+    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
+
 
 
 class Post(ContentBase):
