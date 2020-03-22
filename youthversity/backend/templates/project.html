@@ -15,10 +15,6 @@
 
 <div class="youthversity-upvote-box">
 
-    
-            
-    Sterne: {{ Post.upvotes.count }}<br>
-  <a class="pure-button" href="{% url 'upvote_post' Post.id %}">Als Favorit markieren</a>
   Aufrufe: {{ Post.calls }}<br>
   Sterne: {{ Post.upvotes.count }}<br>
   {% if user.be_user not in Post.upvotes.all %}
