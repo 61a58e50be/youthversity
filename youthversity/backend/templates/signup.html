@@ -3,21 +3,23 @@
 {% block content %}
   <h2>Sign up</h2>
   <form method="post" class="pure-form pure-form-aligned">
-    {% csrf_token %}
-    {% for field in form %}
-      <div class="pure-control-group">
-        {{ field.label_tag }}
-        {{ field }}
-        {% if field.help_text %}
-          <span class="pure-form-message-inline">{{ field.help_text }}</span>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red;">{{ error }}</p>
-        {% endfor %}
+    <fieldset>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="pure-control-group">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}
+            <span class="pure-form-message-inline">{{ field.help_text }}</span>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red;">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <div class="pure-controls">
+        <button type="submit" class="pure-button pure-button-primary">Sign up</button>
       </div>
-    {% endfor %}
-    <div class="pure-controls">
-      <button type="submit" class="pure-button pure-button-primary">Sign up</button>
-    </div>
+    </fieldset>
   </form>
 {% endblock %}
