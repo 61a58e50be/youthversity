@@ -117,7 +117,10 @@ def feed(request):
 
 
 def projects_id(request, id):
+
     post = Post.objects.get(pk=id)
+    post.calls += 1
+    post.save()
     context = {
         "Post": post,
         "Comments": Comment.objects.filter(parent=post)

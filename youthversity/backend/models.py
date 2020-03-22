@@ -67,6 +67,7 @@ class Post(ContentBase):
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100)
     visibility = models.CharField(max_length=10)
+    calls = models.PositiveIntegerField(default=0)
 
 
 class Comment(ContentBase):
