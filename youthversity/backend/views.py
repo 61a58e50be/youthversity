@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from .models import Subject, Post, User, CommentReply, Comment, ViolationReport
 from .forms import SignUpForm
 from .forms import ReportForm, CommentCreationForm
+from django.urls import reverse
 
 def signup(request):
     if request.method == 'POST':
@@ -56,8 +57,12 @@ def topics(request):
 
 
 def subtopics(request, id):
+    childs = Subject.objects.filter(parent=id)
+    if not childs:
+        url = reverse('projects_filter') + "?topics={}".format(id)
+        return HttpResponseRedirect(url)
     context = {
-        "subjects": Subject.objects.filter(parent=id),
+        "subjects": childs,
         "parent": Subject.objects.get(pk=id),
         }
     return render(request, 'subtopics.html', context)
