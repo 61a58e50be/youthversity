@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User, CommentReply
+from .models import Subject, Post, User, CommentReply, Comment
 from .forms import SignUpForm
 
 
@@ -85,3 +85,39 @@ def privacy(request):
 
 def faq(request):
     return render(request, 'faq.html')
+
+def me(request):
+    context = dict(
+        email=request.user.email,
+        username=request.user.be_user.name,
+        type=request.user.be_user.type,
+        language=request.user.be_user.language
+    )
+    return render(request, 'me.html', context)
+
+def rules(request):
+    return render(request, 'legal/rules.html')
+
+def about_us(request):
+    return render(request,'about_us.html')
+
+def copyright(request):
+    return render(request,'legal/copyright.html')
+
+def comments_my(request):
+    context = dict(
+        comments=Comment.objects.filter(author=request.user.be_user)
+    )
+    return render(request, 'comments_my.html', context)
+
+def projects_my(request):
+    context = dict(
+        projects=Post.objects.filter(author=request.user.be_user)
+    )
+    return render(request, 'projects_my.html', context)
+
+def projects_saved(request):
+    context = dict(
+        projects=request.user.be_user.saved_posts.all()
+    )
+    return render(request, 'projects_saved.html', context)
