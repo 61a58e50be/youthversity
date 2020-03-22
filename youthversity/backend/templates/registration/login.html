@@ -3,45 +3,42 @@
 {% block content %}
 <div class="header">
     <h1>Login</h1>
-    <h2>Enter to post your own cool stuff!</h2>
 </div>
-<div class="content-wrapper">
-  <div class="content">
-    {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
+<div class="content">
+  {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
 
-    {% if next %}
-        {% if user.is_authenticated %}
-        <p>Your account doesn't have access to this page. To proceed,
-        please login with an account that has access.</p>
-        {% else %}
-        <p>Please login to see this page.</p>
-        {% endif %}
-    {% endif %}
-    <form method="post" action="{% url 'login' %}"
-      class="pure-form pure-form-aligned">
-      <fieldset>
-        {% csrf_token %}
-        <div class="pure-control-group">
-            {{ form.username.label_tag }}
-            {{ form.username }}
+  {% if next %}
+      {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+      {% else %}
+      <p>Please login to see this page.</p>
+      {% endif %}
+  {% endif %}
+  <form method="post" action="{% url 'login' %}"
+    class="pure-form pure-form-aligned">
+    <fieldset>
+      {% csrf_token %}
+      <div class="pure-control-group">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+      </div>
+      <div class="pure-control-group">
+          {{ form.password.label_tag }}
+          {{ form.password }}
+      </div>
+
+      <div class="pure-controls">
+        <input type="submit" value="login"  class="pure-button pure-button-primary">
+      <input type="hidden" name="next" value="{{ next }}">
+
+        {# Assumes you setup the password_reset view in your URLconf #}
+        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
         </div>
-        <div class="pure-control-group">
-            {{ form.password.label_tag }}
-            {{ form.password }}
-        </div>
-
-        <div class="pure-controls">
-          <input type="submit" value="login"  class="pure-button pure-button-primary">
-        <input type="hidden" name="next" value="{{ next }}">
-
-          {# Assumes you setup the password_reset view in your URLconf #}
-          <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-          </div>
-        </fieldset>
-    </form>
-  </div>
+      </fieldset>
+  </form>
 </div>
 
 {% endblock %}

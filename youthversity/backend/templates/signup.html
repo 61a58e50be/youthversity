@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
+<div class="header">
+    <h1>Sign up</h1>
+</div>
+<div class="content">
   <form method="post" class="pure-form pure-form-aligned">
     <fieldset>
       {% csrf_token %}
@@ -22,4 +25,5 @@
       </div>
     </fieldset>
   </form>
+</div>
 {% endblock %}
