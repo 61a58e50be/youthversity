@@ -31,4 +31,5 @@ urlpatterns = [
     path('comment/<int:id>/report', views.report_comment, name='report_comment'),
     path('upvote_post/<int:id>/', views.upvote_post, name='upvote_post'),
     path('upvote_comment/<int:id>/', views.upvote_comment, name='upvote_comment'),
+    path('projects/popular/', views.projects_popular, name='projects_popular'),
 ]

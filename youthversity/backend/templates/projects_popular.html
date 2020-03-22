@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="header">
+  <h1>Popular projects</h1>
+</div>
+
+<div class="content">
+
+{% include "partial/post_view.html" with posts=posts %}
+
+</div>
+
+{% endblock %}
