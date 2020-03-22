@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>Gemerkte Projekte</h1>
+</div>
+
+<div class="content">
+<ul>
+  {% for project in Projects %}
+      <li> 
+      <h2>{{ project.title }}</h2><br>
+          <p>{{ project.content }}}</p><br>
+          <p>By:{{ project.author.name }}</p>
+      <p>Upvotes:{{ project.upvotes }}</p>
+
+      </li>
+  {% endfor %}
+</ul>
+</div>
+
+
+{% endblock %}

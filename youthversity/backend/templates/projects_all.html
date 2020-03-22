@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>All projects</h1>
+
+<div class="header">
+    <h1>All projects</h1>
+</div>
+
+<div class="content">
+
+{% for post in posts %}
+    <h1> {{ post.title }}</h1>
+    <h2> Author: {{ post.author.name }} </h2>
+    <h2> Subject: {{ post.subject.name }} </h2>
+    <p> Upvotes: {{ post.upvotes.count }} </p>
+    <div> {{ post.content }} </div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
