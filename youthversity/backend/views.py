@@ -173,17 +173,28 @@ def project_new_comment(request, id):
 
 
 @login_required
-def upvote(request, post_id):
+def upvote_post(request, id):
     user = request.user.be_user
 
     try:
-        curr_upvotes = Post.objects.filter(pk=post_id)[0].upvotes
+        curr_upvotes = Post.objects.filter(pk=id)[0].upvotes
         curr_upvotes.add(user)
     except Exception as err:
-        print("Post not found: " + str(err))
         return render(request, '404.html')
 
-    return redirect('../projects/{}/'.format(post_id))
+    return redirect('../projects/{}/'.format(id))
+
+@login_required
+def upvote_comment(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Comment.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../comments/{}/'.format(id))
 
 
 def projects_all(request):

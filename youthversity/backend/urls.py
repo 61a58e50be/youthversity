@@ -27,5 +27,6 @@ urlpatterns = [
     path('about_us/', views.about_us, name='about_us'),
     path('copyright/', views.copyright, name='copyright'),
     path('profile/', views.me, name='profile'),
-    path('upvote/<int:post_id>', views.upvote, name='upvote')
+    path('upvote_post/<int:id>/', views.upvote_post, name='upvote_post'),
+    path('upvote_comment/<int:id>/', views.upvote_comment, name='upvote_comment'),
 ]
