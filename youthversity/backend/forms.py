@@ -12,9 +12,11 @@ class SignUpForm(UserCreationForm):
             "username",
         )
 
+
 class ReportForm(forms.Form):
     message = forms.CharField(label='Bitte beschreibe warum du den Post melden möchtest.', max_length=1000)
 
 
 class CommentCreationForm(forms.Form):
     content = forms.CharField(label='Dein Kommentar', max_length=1000)
+

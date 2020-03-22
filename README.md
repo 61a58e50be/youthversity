@@ -5,7 +5,7 @@
 Eine Lernplattform, auf der Jugendliche allein oder in Gruppen OER zu Themen anlegen können, die sie interessieren, auf OER anderer User zugreifen und somit ihr Wissen austauschen können.
 
 
-
+![#wirvsvirus logo](docs/wirvsvirus_logo.png)
 
 
 
@@ -27,7 +27,7 @@ Eine Lernplattform, auf der Jugendliche allein oder in Gruppen OER zu Themen anl
 
   - Types Schüler/Lehrer
 
-    
+
 
 
 
@@ -54,7 +54,7 @@ Bilder auf einem Fileserver
 - Posts kommentieren
   - reddit Style?
 - Voting System für Posts
-  - nur Upvotes 
+  - nur Upvotes
   - hinzufügen und entfernen eines eigenen Likes
 - Melden von Posts
 - Themen-Kategorien für Posts
@@ -74,7 +74,7 @@ Bilder auf einem Fileserver
 
 1. Datenmodell entwerfen
 2. Django Grundstuktur
-3. 
+3.
 
 
 
@@ -96,7 +96,7 @@ Bilder auf einem Fileserver
 - Forum für Diskussionen/Fragen zu klären beim Erstellen von Posts
 - Beiträge auch nach Themen/Kategorien sortieren/anzeigen
 - Einladungslinks für Lehrer, den sie an ihre Schüler geben können.
-- 
+-
 
 
 

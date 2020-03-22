@@ -1,3 +1,4 @@
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 
@@ -7,7 +8,6 @@ from django.shortcuts import render, redirect
 from .models import Subject, Post, User, CommentReply, Comment
 from .forms import SignUpForm
 from .forms import ReportForm, CommentCreationForm
-
 
 def signup(request):
     if request.method == 'POST':
@@ -19,14 +19,10 @@ def signup(request):
             username = form.cleaned_data.get('username')
             if not username:
                 raise HttpResponseBadRequest('Username empty.')
-            print(username)
-            #auth_user.be_user = User(name=username)
+
+
             be_user = User(name=username, auth_user=auth_user)
             be_user.save()
-
-            raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)
-            # print(user)
             login(request, auth_user)
 
             return redirect('feed')
@@ -49,7 +45,6 @@ def feed(request):
 
 
 def projects_id(request, id):
-    url = request.path
     context = {"Post": Post.objects.all()[id], "Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
     return render(request, 'project.html', context)
 
@@ -90,6 +85,7 @@ def privacy(request):
 def faq(request):
     return render(request, 'faq.html')
 
+
 @login_required
 def me(request):
     context = dict(
@@ -112,9 +108,11 @@ def about_us(request):
 def copyright(request):
     return render(request, 'legal/copyright.html')
 
+
 @login_required
 def comments_my(request):
     context = dict(
+
         Comments=Comment.objects.filter(author=request.user.be_user)
     )
     return render(request, 'comments_my.html', context)
@@ -129,9 +127,10 @@ def projects_my(request):
 @login_required
 def projects_saved(request):
     context = dict(
-        Projects=request.user.user_be.saved_posts
+        projects=request.user.be_user.saved_posts.all()
     )
     return render(request, 'projects_saved.html', context)
+
 
 @login_required
 def report(request, id):
@@ -172,3 +171,4 @@ def project_new_comment(request, id):
 
 def profile_redirect(request):
     return HttpResponseRedirect('/me')
+
