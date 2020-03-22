@@ -4,40 +4,40 @@ from django.db import migrations
 
 DEFAULT_SUBJECTS = {
     "Naturwissenschaften": [
-        "Physik"
-        "Chemie"
-        "Mathe"
-        "Biologie"
-        "Sonstige"
+        "Physik",
+        "Chemie",
+        "Mathe",
+        "Biologie",
+        "Sonstige",
     ],
 
     "Sprachen": [
-        "Englisch"
-        "Deutsch"
-        "Französisch"
-        "Spanisch"
-        "Latein"
-        "Altgriechisch"
-        "Sonstige"
+        "Englisch",
+        "Deutsch",
+        "Französisch",
+        "Spanisch",
+        "Latein",
+        "Altgriechisch",
+        "Sonstige",
     ],
 
     "Gesellschaft": [
-        "Geschichte"
-        "Politik"
-        "Wirtschaft"
-        "Geographie"
-        "Sozialkunde"
-        "Sonstige"
+        "Geschichte",
+        "Politik",
+        "Wirtschaft",
+        "Geographie",
+        "Sozialkunde",
+        "Sonstige",
     ],
 
     "Geisteswissenschaften": [
-        "Philosophie"
-        "Religion"
+        "Philosophie",
+        "Religion",
     ],
 
     "Technik": [
-        "Informatik"
-        "Sonstige"
+        "Informatik",
+        "Sonstige",
     ],
 
     "Musik": [],
@@ -58,7 +58,7 @@ def create_subjects(apps, schema_editor):
         s = Subject(name=subj)
         s.save()
         for ssub in ssubs:
-            ss = Subject(name=subj, parent=s)
+            ss = Subject(name=ssub, parent=s)
             ss.save()
 
 
