@@ -170,6 +170,3 @@ def project_new_comment(request, id):
         form = CommentCreationForm()
 
     return render(request, 'project_new_comment.html', {'form': form, "id": id})
-
-def profile_redirect(request):
-    return HttpResponseRedirect('/me')

@@ -25,6 +25,6 @@ urlpatterns = [
     path('rules/', views.rules, name='rules'),
     path('about_us/', views.about_us, name='about_us'),
     path('copyright/', views.copyright, name='copyright'),
-    path('accounts/profile/', views.profile_redirect, name='profile_redirect'),
+    path('profile/', views.me, name='profile'),
 
 ]
