@@ -3,9 +3,13 @@
 <div class="header">
     <h1>Feed</h1>
     <h2>All your interesting stuff</h2>
-    {% for post in feedPosts %}
-        <li> {{ post.subject.name }} - {{ post.title }}</li>
-    {% endfor %}
+
+    {% include "partial/post_view.html" with posts=feedPosts %}
+</div>
+
+<div class="content">
+Feed Content
+
 </div>
 
 {% endblock %}

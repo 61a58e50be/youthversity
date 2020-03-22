@@ -30,9 +30,38 @@ class CommentCreationForm(forms.Form):
 
 class ProjectForm(forms.Form):
     title = forms.CharField(label='Titel', max_length=100)
-    subjectChoices = []
-    for subject in Subject.objects.all():
-        subjectChoices += [(subject.name, subject.name)]
+
+    subjectChoices = [('null',"Naturwissenschaften"),
+                      ("Physik","Physik"),
+                      ("Chemie","Chemie"),
+                      ("Mathe","Mathe"),
+                      ("Biologie","Biologie"),
+                      ("Sonstige","Sonstige"),
+                      ("null","Sprachen"),
+                      ("Englisch","Englisch"),
+                      ("Deutsch","Deutsch"),
+                      ("Französisch","Französisch"),
+                      ("Spanisch","Spanisch"),
+                      ("Latein","Latein"),
+                      ("Altgriechisch","Altgriechisch"),
+                      ("Sonstige","Sonstige"),
+                      ("null","Gesellschaft"),
+                      ("Geschichte","Geschichte"),
+                      ("Politik","Politik"),
+                      ("Wirtschaft","Wirtschaft"),
+                      ("Geographie","Geographie"),
+                      ("Sozialkunde","Sozialkunde"),
+                      ("Sonstige","Sonstige"),
+                      ("null","Geisteswissenschaften"),
+                      ("Philosophie","Philosophie"),
+                      ("Religion","Religion"),
+                      ("null","Technik"),
+                      ("Informatik","Informatik"),
+                      ("Sonstige","Sonstige")]
+    
+    #subjectChoices = []
+    #for subject in Subject.objects.all():
+        #subjectChoices += [(subject, subject.name)]
     subject = forms.CharField(label='Thema', widget=forms.Select(choices=subjectChoices))
     content = forms.CharField(label='Text', widget=forms.Textarea)
     file = forms.FileField(required=False)

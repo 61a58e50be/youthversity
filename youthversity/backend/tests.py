@@ -38,7 +38,7 @@ class TestPageLoads(TestCase):
         for p in patterns:
             try:
                 link = '/' + str(p.pattern)
-                link = link.replace('<int:id>', '0')
+                link = link.replace('<int:id>', '1')
                 print("NOW TESTING '{}'".format(link))
                 self.assertTrue(self.client.login(username='temporary', password='temporary'))
                 response = self.client.get(link, follow=True)

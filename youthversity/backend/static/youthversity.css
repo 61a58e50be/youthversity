@@ -20,6 +20,8 @@
   text-align: center;
   width: 100%;
   display: inline-block;
+  text-decoration: none;
+  color: #black;
 }
 
 .post-overview-author-name {
@@ -27,15 +29,20 @@
   text-align: right;
   width: 100%;
   display: inline-block;
+  text-decoration: none;
 }
 
 .post-overview-subject {
   text-align: right;
   width: 49%;
   display: inline-block;
+  text-decoration: none;
+  color: #black;
 }
 
 .post-overview-upvotes {
   width: 49%;
   display: inline-block;
+  text-decoration: none;
+  color: #black;
 }

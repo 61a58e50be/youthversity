@@ -2,11 +2,31 @@
 {% block content %}
 <div class="header">
     <h1>Neues Projekt</h1>
-    <form action="/projects/new/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-    </form>
+</div>
+
+<div class="content">
+
+  <form action="/projects/new/" method="post" class="pure-form pure-form-aligned">
+    <fieldset>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="pure-control-group">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}
+            <span class="pure-form-message-inline">{{ field.help_text }}</span>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red;">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <div class="pure-controls">
+        <input type="submit" value="Submit" class="pure-button pure-button-primary">
+      </div>
+    </fieldset>
+  </form>
+
 </div>
 
 {% endblock %}

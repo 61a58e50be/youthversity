@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="header">
-    <h1>{{ Post.title }} }</h1>
+    <h1>{{ Post.title }}</h1>
       <h2>By {{ Post.author.name }}</h2>
       {% if True %}
           <h3>edited</h3>
@@ -11,17 +11,19 @@
 <div class="content">
 
 
-    <p> {{Post.content}}</p>
+<p> {{Post.content}}</p>
 
-<div>Likes:{{ Post.upvotes }}</div></div>
+<div>Likes: {{ Post.upvotes }}</div>
 
 
-  
 
+
+<h3>Beiträge</h3>
+<a class="pure-button" href="{% url 'project_new_comment' Post.id %}">Neuer Beitrag</a>
     <ul>
     {% for comment in Comments %}
       <li> {{ comment.content }} - {{ comment.author }}</li>
     {% endfor %}
     </ul>
-
+</div>
 {% endblock %}

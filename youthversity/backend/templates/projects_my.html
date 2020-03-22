@@ -5,17 +5,8 @@
 </div>
 
 <div class="content">
-<ul>
 
-  {% for project in Projects %}
-      <li> 
-
-      <h2>{{ project.title }}</h2><br>
-      <p>{{ project.content }}</p><br>
-      <p>Upvotes: {{ project.upvotes }}</p>
-      </li>
-  {% endfor %}
-</ul>
+  {% include "partial/post_view.html" with posts=projects %}
 </div>
 
 {% endblock %}

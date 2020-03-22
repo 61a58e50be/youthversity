@@ -21,23 +21,25 @@
     {% endif %}
     <form method="post" action="{% url 'login' %}"
       class="pure-form pure-form-aligned">
-      {% csrf_token %}
-      <div class="pure-control-group">
-          {{ form.username.label_tag }}
-          {{ form.username }}
-      </div>
-      <div class="pure-control-group">
-          {{ form.password.label_tag }}
-          {{ form.password }}
-      </div>
-
-      <div class="pure-controls">
-        <input type="submit" value="login"  class="pure-button pure-button-primary">
-      <input type="hidden" name="next" value="{{ next }}">
-
-        {# Assumes you setup the password_reset view in your URLconf #}
-        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+      <fieldset>
+        {% csrf_token %}
+        <div class="pure-control-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
         </div>
+        <div class="pure-control-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+
+        <div class="pure-controls">
+          <input type="submit" value="login"  class="pure-button pure-button-primary">
+        <input type="hidden" name="next" value="{{ next }}">
+
+          {# Assumes you setup the password_reset view in your URLconf #}
+          <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+          </div>
+        </fieldset>
     </form>
   </div>
 </div>

@@ -205,7 +205,7 @@ def comments_my(request):
 @login_required
 def projects_my(request):
     context = dict(
-        Projects=Post.objects.filter(author=request.user.be_user)
+        projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
 
@@ -264,7 +264,6 @@ def projects_new(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             user = request.user.be_user
-            # get data submitted in the form
             content = form.cleaned_data.get('content')
             subject = form.cleaned_data.get('subject')
             title = form.cleaned_data.get('title')
@@ -272,7 +271,6 @@ def projects_new(request):
                 if s.name == subject:
                     subject = s
                     break
-            # insert entry in database
             p = Post(content=content, author=user, edited=False, type='post', subject=subject, visibility='all', title=title)
             p.save()
             return render(request, 'index.html')
@@ -291,19 +289,20 @@ def upvote_post(request, id):
     except Exception as err:
         return render(request, '404.html')
 
-    return redirect('../projects/{}/'.format(id))
+    return redirect(reverse('projects_id', kwargs={"id":id}))
 
 @login_required
 def upvote_comment(request, id):
     user = request.user.be_user
 
     try:
-        curr_upvotes = Comment.objects.filter(pk=id)[0].upvotes
+        comment = Comment.objects.filter(pk=id)[0]
+        curr_upvotes = comment.upvotes
         curr_upvotes.add(user)
     except Exception as err:
         return render(request, '404.html')
 
-    return redirect('../comments/{}/'.format(id))
+    return redirect(reverse('projects_id', kwargs={"id":comment.parent.id}))
 
 
 def projects_all(request):
