@@ -94,9 +94,11 @@ def me(request):
     return render(request, 'me.html', context)
 
 
-def rules(request):
-    return render(request, 'legal/rules.html')
+def comment_guidelines(request):
+    return render(request, 'legal/comment_guidelines.html')
 
+def project_guidelines(request):
+    return render(request, 'legal/project_guidelines.html')
 
 def about_us(request):
     return render(request, 'about_us.html')
@@ -182,3 +184,8 @@ def upvote(request, post_id):
         return render(request, '404.html')
 
     return redirect('../projects/{}/'.format(post_id))
+
+
+def projects_all(request):
+    context = dict(posts=Post.objects.all())
+    return render(request, 'projects_all.html', context=context)
