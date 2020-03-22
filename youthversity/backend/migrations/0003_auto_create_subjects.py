@@ -2,28 +2,69 @@
 
 from django.db import migrations
 
-DEFAULT_SUBJECTS = [
-    "Naturwissenschaften", "Physik", "Chemie", "Mathe", "Biologie",
-    "Sprachen", "Englisch", "Deutsch", "Französisch", "Spanisch", "Latein", "Altgriechisch",
-    "Gesellschaft", "Geschichte", "Politik", "Wirtschaft", "Geographie", "Sozialkunde",
-    "Technik", "Informatik",
-    "Musik",
-    "Kunst",
-    "Sonstige"
-]
+DEFAULT_SUBJECTS = {
+    "Naturwissenschaften": [
+        "Physik",
+        "Chemie",
+        "Mathe",
+        "Biologie",
+        "Sonstige",
+    ],
+
+    "Sprachen": [
+        "Englisch",
+        "Deutsch",
+        "Französisch",
+        "Spanisch",
+        "Latein",
+        "Altgriechisch",
+        "Sonstige",
+    ],
+
+    "Gesellschaft": [
+        "Geschichte",
+        "Politik",
+        "Wirtschaft",
+        "Geographie",
+        "Sozialkunde",
+        "Sonstige",
+    ],
+
+    "Geisteswissenschaften": [
+        "Philosophie",
+        "Religion",
+    ],
+
+    "Technik": [
+        "Informatik",
+        "Sonstige",
+    ],
+
+    "Musik": [],
+
+    "Kunst": [],
+
+    "Sport": [],
+
+    "Sonstige": [],
+}
+
 
 
 def create_subjects(apps, schema_editor):
     Subject = apps.get_model('backend', 'Subject')
 
-    for subj in DEFAULT_SUBJECTS:
+    for subj, ssubs in DEFAULT_SUBJECTS.items():
         s = Subject(name=subj)
         s.save()
+        for ssub in ssubs:
+            ss = Subject(name=ssub, parent=s)
+            ss.save()
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('backend', '0001_initial'),
+        ('backend', '0002_subject_parent'),
     ]
 
     operations = [

@@ -2,7 +2,7 @@
 
 
 
-Eine Lernplattform, auf der Jugendliche allein oder in Gruppen OER zu Themen anlegen können, die sie interessieren, auf OER anderer User zugreifen und somit ihr Wissen austauschen können.
+Eine Onlineplattform für Schüler zur Erstellung und dem gegenseitigen Austausch von Projekten.
 
 
 ![#wirvsvirus logo](docs/wirvsvirus_logo.png)
