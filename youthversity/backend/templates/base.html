@@ -33,6 +33,7 @@
             {% endif %}
             <li class="pure-menu-item"><a href="{% url 'topics' %}" class="pure-menu-link">Themen</a></li>
             <li class="pure-menu-item"><a href="#" class="pure-menu-link">Beliebte Projekte</a></li>
+            <li class="pure-menu-item"><a href="{% url 'projects_all' %}" class="pure-menu-link">Alle Projekte</a></li>
             {% if user.is_authenticated %}
               <li class="pure-menu-item"><a href="{% url 'projects_my' %}" class="pure-menu-link">Meine Projekte</a></li>
               <li class="pure-menu-item"><a href="{% url 'comments_my' %}" class="pure-menu-link">Meine Beiträge</a></li>
