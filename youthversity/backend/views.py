@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User, CommentReply
+from .models import Subject, Post, User, CommentReply, Comment
 from .forms import SignUpForm
 
 
@@ -91,7 +91,7 @@ def me(request):
         email=request.user.email,
         username=request.user.be_user.name,
         type=request.user.be_user.type,
-        language=request.user.user_be.language
+        language=request.user.be_user.language
     )
     return render(request, 'me.html', context)
 
@@ -106,18 +106,18 @@ def copyright(request):
 
 def comments_my(request):
     context = dict(
-        Comments=Comment.objects().filter(author=request.user.user_be)
+        comments=Comment.objects.filter(author=request.user.be_user)
     )
     return render(request, 'comments_my.html', context)
 
 def projects_my(request):
     context = dict(
-        Projects=Post.objects().filter(author=request.user.user_be)
+        projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
 
 def projects_saved(request):
     context = dict(
-        Projects=request.user.user_be.saved_posts
+        projects=request.user.be_user.saved_posts.all()
     )
     return render(request, 'projects_saved.html', context)
