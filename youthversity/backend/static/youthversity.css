@@ -17,10 +17,25 @@
 }
 
 .post-overview-title{
-  color: black;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
 
+.post-overview-author-name {
+  color: #444;
+  text-align: right;
+  width: 100%;
+  display: inline-block;
 }
 
 .post-overview-subject {
-  width: 3em
+  text-align: right;
+  width: 49%;
+  display: inline-block;
+}
+
+.post-overview-upvotes {
+  width: 49%;
+  display: inline-block;
 }
