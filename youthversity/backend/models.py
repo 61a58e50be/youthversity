@@ -60,13 +60,14 @@ class ContentBase(CommonInfo):
 class Subject(models.Model):
     name = models.CharField(max_length=40)
     parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL, related_name="childs")
-
+    file = models.CharField(max_length=60, null=True)
 
 
 class Post(ContentBase):
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100)
     visibility = models.CharField(max_length=10)
+    file = models.FileField(upload_to='files/', null=True)
 
 
 class Comment(ContentBase):
