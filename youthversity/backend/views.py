@@ -314,20 +314,18 @@ def projects_all(request):
     return render(request, 'projects_all.html', context=context)
 
 def report_comment(request, id):
-    def report(request, id):
-        # if this is a POST request we need to process the form data
-        if request.method == 'POST':
-            # create a form instance and populate it with data from the request:
-            form = ReportForm(request.POST)
-            # check whether it's valid:
-            if form.is_valid():
-                msg = form.cleaned_data.get('message')
-                ViolationReport(content=msg, author=request.user.be_user, done=False,flagged_type='comment', content_id=id).save()
-                serverStatus('New Violation report:' + msg + 'for project' + str(id))
-                return HttpResponse('Thanks for submitting, your report will be processed')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ReportForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            msg = form.cleaned_data.get('message')
+            ViolationReport(content=msg, author=request.user.be_user, done=False,flagged_type='comment', content_id=id).save()
+            serverStatus('New Violation report:' + msg + 'for project' + str(id))
+            return HttpResponse('Thanks for submitting, your report will be processed')
 
-        # if a GET (or any other method) we'll create a blank form
-        else:
-            form = ReportForm()
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ReportForm()
 
-        return render(request, 'legal/report_comment.html', {'form': form, "id": id})
+    return render(request, 'legal/report.html', {'form': form, "id": id})
