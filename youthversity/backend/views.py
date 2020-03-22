@@ -1,10 +1,10 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User, CommentReply, Comment
 from .forms import SignUpForm
+from .models import Subject, Post, User, Comment
 
 
 def signup(request):
@@ -17,14 +17,9 @@ def signup(request):
             username = form.cleaned_data.get('username')
             if not username:
                 raise HttpResponseBadRequest('Username empty.')
-            print(username)
-            #auth_user.be_user = User(name=username)
+
             be_user = User(name=username, auth_user=auth_user)
             be_user.save()
-
-            raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)
-            # print(user)
             login(request, auth_user)
 
             return redirect('feed')
@@ -46,10 +41,9 @@ def feed(request):
     return render(request, 'feed.html', context)
 
 
-def projects_id(request,id):
-    url=request.path
-    context = {"Post":Post.objects.all()[id],"Comments":Comment.object.filter(parent=Post.objects.all()[id])}
-    return render(request,'project.html', context)
+def projects_id(request, id):
+    context = {"Post": Post.objects.all()[id], "Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
+    return render(request, 'project.html', context)
 
 
 @login_required
@@ -80,11 +74,14 @@ def projects_filter(request):
 def imprint(request):
     return render(request, 'legal/imprint.html')
 
+
 def privacy(request):
     return render(request, 'legal/privacy.html')
 
+
 def faq(request):
     return render(request, 'faq.html')
+
 
 def me(request):
     context = dict(
@@ -95,14 +92,18 @@ def me(request):
     )
     return render(request, 'me.html', context)
 
+
 def rules(request):
     return render(request, 'legal/rules.html')
 
+
 def about_us(request):
-    return render(request,'about_us.html')
+    return render(request, 'about_us.html')
+
 
 def copyright(request):
-    return render(request,'legal/copyright.html')
+    return render(request, 'legal/copyright.html')
+
 
 def comments_my(request):
     context = dict(
@@ -110,11 +111,13 @@ def comments_my(request):
     )
     return render(request, 'comments_my.html', context)
 
+
 def projects_my(request):
     context = dict(
         projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
+
 
 def projects_saved(request):
     context = dict(
