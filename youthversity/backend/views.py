@@ -44,14 +44,13 @@ def index(request):
 @login_required
 def feed(request):
     # get different variables used to evaluate feed
-    user = request.user.user_be
+    user = request.user.be_user
     userPosts = Post.objects.filter(author=user)
     userComments = Comment.objects.filter(author=user)
-    subjects = Subject.objects.all
-    
+    subjects = Subject.objects.all()
     # create list containing importance-values of all subjects
     values = []
-    for i in len(subjects):
+    for i in range(len(subjects)):
         values.append(0)
         
     for post in userPosts:
