@@ -79,3 +79,21 @@ def about_us(request):
 
 def copyright(request):
     return render(request,'legal/copyright.html')
+
+def comments_my(request):
+    context = dict(
+        Comments=Comment.objects().filter(author=request.user.user_be)
+    )
+    return render(request, 'comments_my.html', context)
+
+def projects_my(request):
+    context = dict(
+        Projects=Post.objects().filter(author=request.user.user_be)
+    )
+    return render(request, 'projects_my.html', context)
+
+def projects_saved(request):
+    context = dict(
+        Projects=request.user.user_be.saved_posts
+    )
+    return render(request, 'projects_saved.html', context)
