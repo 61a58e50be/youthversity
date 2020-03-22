@@ -97,9 +97,11 @@ def me(request):
     return render(request, 'me.html', context)
 
 
-def rules(request):
-    return render(request, 'legal/rules.html')
+def comment_guidelines(request):
+    return render(request, 'legal/comment_guidelines.html')
 
+def project_guidelines(request):
+    return render(request, 'legal/project_guidelines.html')
 
 def about_us(request):
     return render(request, 'about_us.html')
