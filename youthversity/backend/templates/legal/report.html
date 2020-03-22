@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>Reports</h1>
+</div>
+
+<div class="content">
+
+  <form action="/projects/{{ id }}/report/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+</div>
+
+{% endblock %}

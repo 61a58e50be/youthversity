@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+    <h1>Neuer Kommentar</h1>
+</div>
+
+<div class="content">
+
+  <form action="/projects/{{ id }}/new_comment/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+</div>
+
+{% endblock %}
+
