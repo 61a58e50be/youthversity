@@ -52,3 +52,34 @@
   padding: 0.5em;
 
 }
+
+.youthversity-comment-box-single {
+  background-color: #EEF5EE;
+  margin: 2px;
+  padding: 2px;
+}
+
+.youthversity-comment-content {
+  margin: 10px;
+}
+
+.youthversity-comment-date {
+    width: 49%;
+    display: inline-block;
+    text-align: right;
+}
+
+
+.youthversity-comment-author {
+    width: 49%;
+    display: inline-block;
+}
+
+.youthversity-comment-report {
+  text-decoration: none;
+  color: #aaa;
+  width: 100%;
+  display: inline-block;
+  text-align: right;
+  font-size: x-small;
+}

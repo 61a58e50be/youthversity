@@ -3,7 +3,7 @@
 <div class="header">
     <h1>{{ Post.title }}</h1>
       <h2>By {{ Post.author.name }}</h2>
-      {% if True %}
+      {% if Post.edited %}
           <h3>edited</h3>
       {% endif %}
 </div>
@@ -18,12 +18,19 @@
 
 
 
-<h3>Beiträge</h3>
-<a class="pure-button" href="{% url 'project_new_comment' Post.id %}">Neuer Beitrag</a>
-    <ul>
+
+<div class="youthversity-comment-box">
+  <h3>Beiträge</h3>
+    <a class="pure-button" href="{% url 'project_new_comment' Post.id %}">Neuer Beitrag</a>
     {% for comment in Comments %}
-      <li> {{ comment.content }} - {{ comment.author }}</li>
+      <div class="youthversity-comment-box-single">
+        <label class="youthversity-comment-author">{{ comment.author.name }} </label>
+        <label class="youthversity-comment-date">{{ comment.created }} </label><br>
+        <div class="youthversity-comment-content">{{ comment.content }} </div>
+        <a href="{% url 'report_comment' comment.id %}" class="youthversity-comment-report">Melden</a>
+
+      </div>
     {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}
