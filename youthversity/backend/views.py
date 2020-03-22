@@ -1,12 +1,12 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User, CommentReply
+from .models import Subject, Post, User, CommentReply, Comment
 from .forms import SignUpForm
-from .forms import ReportForm
+from .forms import ReportForm, CommentCreationForm
 
 
 def signup(request):
@@ -33,7 +33,6 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
->>>>>>> 756875cc9ef829db8efc2795d9f510bc1bb46123
 
 
 # Create your views here.
@@ -51,7 +50,7 @@ def feed(request):
 
 def projects_id(request, id):
     url = request.path
-    context = {"Post": Post.objects.all()[id], "Comments": Comment.object.filter(parent=Post.objects.all()[id])}
+    context = {"Post": Post.objects.all()[id], "Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
     return render(request, 'project.html', context)
 
 
@@ -91,13 +90,13 @@ def privacy(request):
 def faq(request):
     return render(request, 'faq.html')
 
-
+@login_required
 def me(request):
     context = dict(
         email=request.user.email,
         username=request.user.be_user.name,
         type=request.user.be_user.type,
-        language=request.user.user_be.language
+        language=request.user.be_user.language
     )
     return render(request, 'me.html', context)
 
@@ -113,28 +112,28 @@ def about_us(request):
 def copyright(request):
     return render(request, 'legal/copyright.html')
 
-
+@login_required
 def comments_my(request):
     context = dict(
-        Comments=Comment.objects().filter(author=request.user.user_be)
+        Comments=Comment.objects.filter(author=request.user.be_user)
     )
     return render(request, 'comments_my.html', context)
 
-
+@login_required
 def projects_my(request):
     context = dict(
-        Projects=Post.objects().filter(author=request.user.user_be)
+        Projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
 
-
+@login_required
 def projects_saved(request):
     context = dict(
         Projects=request.user.user_be.saved_posts
     )
     return render(request, 'projects_saved.html', context)
 
-
+@login_required
 def report(request, id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -149,3 +148,27 @@ def report(request, id):
         form = ReportForm()
 
     return render(request, 'legal/report.html', {'form': form,"id":id})
+
+
+@login_required
+def project_new_comment(request, id):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = CommentCreationForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            post=Post.objects.all()[id]
+            text=request.POST.get('content')
+            print(text)
+            Comment.objects.create(parent=post,author=request.user.be_user,edited=False,content=text,type='comment')
+            return HttpResponseRedirect('/projects/'+str(id))
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = CommentCreationForm()
+
+    return render(request, 'project_new_comment.html', {'form': form, "id": id})
+
+def profile_redirect(request):
+    return HttpResponseRedirect('/me')
