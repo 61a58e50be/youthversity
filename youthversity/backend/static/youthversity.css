@@ -7,3 +7,20 @@
 .youthversity-faq-answer {
   margin-bottom: 15px
 }
+
+.post-overview-all {
+  background-color: #93c0c3;
+  margin: 0.5em;
+  padding: 0.5em;
+  color: black;
+  word-wrap: normal;
+}
+
+.post-overview-title{
+  color: black;
+
+}
+
+.post-overview-subject {
+  width: 3em
+}
