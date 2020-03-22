@@ -48,7 +48,7 @@ def feed(request):
 
 def projects_id(request,id):
     url=request.path
-    context = {"Post":Post.objects.all()[id],"Comments":Comment.object.filter(parent=Post.objects.all()[id])}
+    context = {"Post":Post.objects.all()[id],"Comments":Comment.objects.filter(parent=Post.objects.all()[id])}
     return render(request,'project.html', context)
 
 
