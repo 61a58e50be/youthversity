@@ -1,15 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About us</title>
-  </head>
-  <body>
-    <h1> About us</h1>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="header">
+    <h1>About us</h1>
+    <!-- <h2>Seems, there is something missing?</h2> -->
+</div>
+
+<div class="content">
     <h2>Vor welchem Hintergrund entstand die Idee zu dem Projekt?</h2><br>
     <div><p>Die Idee zu einer Website für den Austausch von Lernmaterialien kam im Zuge des von der Bundesregierung im Rahmen der Sars-Cov-2 Pandemie ausgerichteten Hackathons "WirvsVirus". Da aufgrund der Pandemie in Deutschland und auch in einigen anderen europäischen Ländern gerade die Schulen geschlossen sind, wollten wir im Rahmen des Hackathons eine Plattform schaffen, auf der sich interessierte Schüler austauschen können und auch während des Schulausfalls Möglichkeiten haben, sich weiterzubilden - selbst wenn von schulischer Seite keine Infrastruktur zur Verfügung steht.</p></div>
     <h2>Wer sind wir?</h2>
     <div><p>Wir sind eine gemischte Gruppe interessierter junger Menschen, bestehend aus Schülern, Studenten und Informatikern aus Deutschland, die gerne an Projekten arbeiten und unsere Zeit sowie unsere Kenntnisse nutzen wollen, um Lösungen für Probleme, die aus der Corona-Pandemie entstanden sind, zu finden.</p></div>
-  </body>
-</html>
+<div>
+{% endblock %}
