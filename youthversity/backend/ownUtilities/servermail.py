@@ -2,7 +2,7 @@ import smtplib
 
 EMAIL = "info.youthversity@gmail.com"
 # CAUTION: Please enter the password before using!
-PASSWORD = ""
+PASSWORD = "8coRFmLwuUxBXVuZROdF"
 
 
 def serverStatus(text):
@@ -19,5 +19,6 @@ def mail(recipient, text):
     server = smtplib.SMTP(host='smtp.gmail.com', port=587)
     server.starttls()
     server.login(EMAIL, PASSWORD)
+    print(text)
     server.sendmail(EMAIL, recipient, text)
     server.quit()

@@ -9,6 +9,12 @@ from .forms import ReportForm, CommentCreationForm
 import random
 from itertools import chain
 from django.urls import reverse
+from .forms import SignUpForm
+from .models import Subject, Post, User, Comment, ViolationReport
+
+from .ownUtilities.servermail import serverStatus
+
+
 
 def signup(request):
     if request.method == 'POST':
@@ -111,7 +117,11 @@ def feed(request):
 
 
 def projects_id(request, id):
-    context = {"Post": Post.objects.all()[id-1], "Comments": Comment.objects.filter(parent=Post.objects.all()[id-1])}
+    post = Post.objects.get(pk=id)
+    context = {
+        "Post": post,
+        "Comments": Comment.objects.filter(parent=post)
+        }
     return render(request, 'project.html', context)
 
 
@@ -221,7 +231,8 @@ def report(request, id):
         # check whether it's valid:
         if form.is_valid():
             msg = form.cleaned_data.get('message')
-            ViolationReport(content=msg, author=request.user.be_user, done=False).save()
+            ViolationReport(content=msg, author=request.user.be_user, done=False, flagged_type='project', content_id=id).save()
+            serverStatus('New Violation report:'+msg+'for project'+str(id))
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form
@@ -239,7 +250,7 @@ def project_new_comment(request, id):
         form = CommentCreationForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            post = Post.objects.all()[id]
+            post = Post.objects.get(pk=id)
             text = request.POST.get('content')
             Comment.objects.create(parent=post, author=request.user.be_user, edited=False, content=text, type='comment')
             return HttpResponseRedirect('/projects/' + str(id))
@@ -301,3 +312,20 @@ def upvote_comment(request, id):
 def projects_all(request):
     context = dict(posts=Post.objects.all())
     return render(request, 'projects_all.html', context=context)
+
+def report_comment(request, id):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ReportForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            msg = form.cleaned_data.get('message')
+            ViolationReport(content=msg, author=request.user.be_user, done=False,flagged_type='comment', content_id=id).save()
+            serverStatus('New Violation report:' + msg + 'for project' + str(id))
+            return HttpResponse('Thanks for submitting, your report will be processed')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ReportForm()
+
+    return render(request, 'legal/report.html', {'form': form, "id": id})
