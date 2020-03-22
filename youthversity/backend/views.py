@@ -93,4 +93,13 @@ def me(request):
         type=request.user.be_user.type,
         language=request.user.user_be.language
     )
-    return render(request, "me.html", context)
+    return render(request, 'me.html', context)
+
+def rules(request):
+    return render(request, 'legal/rules.html')
+
+def about_us(request):
+    return render(request,'about_us.html')
+
+def copyright(request):
+    return render(request,'legal/copyright.html')

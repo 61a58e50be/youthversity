@@ -21,4 +21,7 @@ urlpatterns = [
     path('imprint/', views.imprint, name='imprint'),
     path('privacy/', views.privacy, name='privacy'),
     path('me/', views.me, name='me'),
+    path('rules/', views.rules, name='rules'),
+    path('about_us/', views.about_us, name='about_us'),
+    path('copyright/', views.copyright, name='copyright'),
 ]
