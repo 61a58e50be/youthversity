@@ -55,6 +55,13 @@ def topics(request):
     return render(request, 'topics.html', context)
 
 
+def subtopics(request, id):
+    context = {
+        "subjects": Subject.objects.filter(parent=id),
+        "parent": Subject.objects.get(pk=id),
+        }
+    return render(request, 'subtopics.html', context)
+
 @login_required
 def projects_filter(request):
     if request.method != 'GET':
