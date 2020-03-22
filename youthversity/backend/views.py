@@ -199,7 +199,7 @@ def comments_my(request):
 @login_required
 def projects_my(request):
     context = dict(
-        Projects=Post.objects.filter(author=request.user.be_user)
+        projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
 
