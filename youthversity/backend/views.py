@@ -1,11 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Post, Comment, CommentReply
-
-
-from .models import Subject, Post
+from .models import Subject, Post, Comment, CommentReply
 from django.http import HttpResponse
+from .forms import ReportForm
 
 
 # Create your views here.
@@ -22,10 +20,10 @@ def feed(request):
     return render(request, 'feed.html', context)
 
 
-def projects_id(request,id):
-    url=request.path
-    context = {"Post":Post.objects.all()[id],"Comments":Comment.object.filter(parent=Post.objects.all()[id])}
-    return render(request,'project.html', context)
+def projects_id(request, id):
+    url = request.path
+    context = {"Post": Post.objects.all()[id], "Comments": Comment.object.filter(parent=Post.objects.all()[id])}
+    return render(request, 'project.html', context)
 
 
 @login_required
@@ -56,11 +54,14 @@ def projects_filter(request):
 def imprint(request):
     return render(request, 'legal/imprint.html')
 
+
 def privacy(request):
     return render(request, 'legal/privacy.html')
 
+
 def faq(request):
     return render(request, 'faq.html')
+
 
 def me(request):
     context = dict(
@@ -71,14 +72,18 @@ def me(request):
     )
     return render(request, 'me.html', context)
 
+
 def rules(request):
     return render(request, 'legal/rules.html')
 
+
 def about_us(request):
-    return render(request,'about_us.html')
+    return render(request, 'about_us.html')
+
 
 def copyright(request):
-    return render(request,'legal/copyright.html')
+    return render(request, 'legal/copyright.html')
+
 
 def comments_my(request):
     context = dict(
@@ -86,14 +91,32 @@ def comments_my(request):
     )
     return render(request, 'comments_my.html', context)
 
+
 def projects_my(request):
     context = dict(
         Projects=Post.objects().filter(author=request.user.user_be)
     )
     return render(request, 'projects_my.html', context)
 
+
 def projects_saved(request):
     context = dict(
         Projects=request.user.user_be.saved_posts
     )
     return render(request, 'projects_saved.html', context)
+
+
+def report(request, id):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ReportForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            return HttpResponse('Thanks for submitting, your report will be processed')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ReportForm()
+
+    return render(request, 'legal/report.html', {'form': form,"id":id})
