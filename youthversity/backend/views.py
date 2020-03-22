@@ -1,7 +1,5 @@
-
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
@@ -10,6 +8,7 @@ from .forms import SignUpForm, ProjectForm
 from .forms import ReportForm, CommentCreationForm
 import random
 from itertools import chain
+from django.urls import reverse
 
 def signup(request):
     if request.method == 'POST':
@@ -21,7 +20,6 @@ def signup(request):
             username = form.cleaned_data.get('username')
             if not username:
                 raise HttpResponseBadRequest('Username empty.')
-
 
             be_user = User(name=username, auth_user=auth_user)
             be_user.save()
@@ -117,11 +115,21 @@ def projects_id(request, id):
     return render(request, 'project.html', context)
 
 
-
 def topics(request):
     context = {"subjects": Subject.objects.filter(parent=None)}
     return render(request, 'topics.html', context)
 
+
+def subtopics(request, id):
+    childs = Subject.objects.filter(parent=id)
+    if not childs:
+        url = reverse('projects_filter') + "?topics={}".format(id)
+        return HttpResponseRedirect(url)
+    context = {
+        "subjects": childs,
+        "parent": Subject.objects.get(pk=id),
+        }
+    return render(request, 'subtopics.html', context)
 
 @login_required
 def projects_filter(request):
@@ -165,9 +173,11 @@ def me(request):
     return render(request, 'me.html', context)
 
 
-def rules(request):
-    return render(request, 'legal/rules.html')
+def comment_guidelines(request):
+    return render(request, 'legal/comment_guidelines.html')
 
+def project_guidelines(request):
+    return render(request, 'legal/project_guidelines.html')
 
 def about_us(request):
     return render(request, 'about_us.html')
@@ -185,12 +195,14 @@ def comments_my(request):
     )
     return render(request, 'comments_my.html', context)
 
+
 @login_required
 def projects_my(request):
     context = dict(
         Projects=Post.objects.filter(author=request.user.be_user)
     )
     return render(request, 'projects_my.html', context)
+
 
 @login_required
 def projects_saved(request):
@@ -216,7 +228,7 @@ def report(request, id):
     else:
         form = ReportForm()
 
-    return render(request, 'legal/report.html', {'form': form,"id":id})
+    return render(request, 'legal/report.html', {'form': form, "id": id})
 
 
 @login_required
@@ -227,11 +239,10 @@ def project_new_comment(request, id):
         form = CommentCreationForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            post=Post.objects.all()[id]
-            text=request.POST.get('content')
-            print(text)
-            Comment.objects.create(parent=post,author=request.user.be_user,edited=False,content=text,type='comment')
-            return HttpResponseRedirect('/projects/'+str(id))
+            post = Post.objects.all()[id]
+            text = request.POST.get('content')
+            Comment.objects.create(parent=post, author=request.user.be_user, edited=False, content=text, type='comment')
+            return HttpResponseRedirect('/projects/' + str(id))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -262,3 +273,32 @@ def projects_new(request):
         form = ProjectForm()
     context = {'form':form}
     return render(request, 'projects_new.html', context)
+
+@login_required
+def upvote_post(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Post.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../projects/{}/'.format(id))
+
+@login_required
+def upvote_comment(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Comment.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../comments/{}/'.format(id))
+
+
+def projects_all(request):
+    context = dict(posts=Post.objects.all())
+    return render(request, 'projects_all.html', context=context)

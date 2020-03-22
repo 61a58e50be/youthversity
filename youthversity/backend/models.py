@@ -36,6 +36,8 @@ class SchoolClass(CommonInfo):
 
 
 class ViolationReport(CommonInfo):
+    flagged_type = models.TextField()
+    content_id = models.PositiveIntegerField()
     content = models.TextField()
     answer = models.TextField(blank=True, null=True)
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="violation_reports_authored")
@@ -57,7 +59,7 @@ class ContentBase(CommonInfo):
 
 class Subject(models.Model):
     name = models.CharField(max_length=40)
-    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL, related_name="childs")
 
 
 
