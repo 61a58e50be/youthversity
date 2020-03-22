@@ -111,7 +111,7 @@ def feed(request):
 
 
 def projects_id(request, id):
-    context = {"Post": Post.objects.all()[id], "Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
+    context = {"Post": Post.objects.all()[id-1], "Comments": Comment.objects.filter(parent=Post.objects.all()[id-1])}
     return render(request, 'project.html', context)
 
 
