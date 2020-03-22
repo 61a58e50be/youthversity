@@ -18,6 +18,8 @@ def create_test_data(apps, _schema_editor):
         username="admin",
         password="pbkdf2_sha256$180000$eKigTTXPAJxl$xVyeOjKHcfO2q9xD/ItpZ1G7lk+l2MLoNvJerKlat4M="
     )
+    superuser.is_superuser = 1
+    superuser.is_staff = 1
     superuser.save()
 
     # then we need some other users
