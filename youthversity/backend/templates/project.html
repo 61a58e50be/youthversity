@@ -9,14 +9,14 @@
 
   <h1>{{ Post.title }}</h1>
       <h2>By {{ Post.author.name }}</h2>
-      {% if(Post.edited) %}
+      {% if Post.edited %}
           <h3>edited</h3>
       {% endif %}
 
 
-<p> {% Post.content %}
+<p> {{ Post.content }}
 
-<div>Likes:{% Post.upvotes %}</div>
+<div>Likes:{{ Post.upvotes }}</div>
 </div>
 
     <ul>
