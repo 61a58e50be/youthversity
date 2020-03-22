@@ -266,7 +266,7 @@ def projects_new(request):
                     break
             p = Post(content=content, author=user, edited=False, type='post', subject=subject, visibility='all', title=title)
             p.save()
-            return HttpResponse('Nice')
+            return render(request, 'index.html')
     else:
         form = ProjectForm()
     context = {'form':form}
