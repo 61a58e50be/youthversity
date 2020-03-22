@@ -257,7 +257,6 @@ def projects_new(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             user = request.user.be_user
-            # get data submitted in the form
             content = form.cleaned_data.get('content')
             subject = form.cleaned_data.get('subject')
             title = form.cleaned_data.get('title')
@@ -265,10 +264,9 @@ def projects_new(request):
                 if s.name == subject:
                     subject = s
                     break
-            # insert entry in database
             p = Post(content=content, author=user, edited=False, type='post', subject=subject, visibility='all', title=title)
             p.save()
-            return render(request, 'index.html')
+            return HttpResponse('Nice')
     else:
         form = ProjectForm()
     context = {'form':form}
