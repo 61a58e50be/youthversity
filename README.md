@@ -7,8 +7,10 @@ Eine Onlineplattform für Schüler zur Erstellung und dem gegenseitigen Austausc
 Entstanden im Rahmen von:
 ![#wirvsvirus logo](docs/wirvsvirus_logo.png)
 
+You can find this project in the context of the #WirVsVirus Hackathon on [Devpost](https://devpost.com/software/1_019_e-learning_youthversity-youthversity).
 
 
+[![#wirvsvirus logo](docs/screenshots/screenshots.gif)](https://github.com/caschnu/youthversity/tree/master/docs/screenshots)
 
 
 ### Installation
@@ -79,7 +81,3 @@ Issues, Pull Requests or any kind of support are welcomed.
 - collaboration for post creation
 
 - drafts for post creations
-
-  
-
-
