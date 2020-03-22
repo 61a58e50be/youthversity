@@ -10,4 +10,4 @@ install:
 # run tests
 script:
   - cd youthversity
-  - python manage.py test
+  - python manage.py test backend
