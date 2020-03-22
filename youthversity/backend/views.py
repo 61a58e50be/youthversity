@@ -49,7 +49,7 @@ def projects_id(request, id):
     return render(request, 'project.html', context)
 
 
-@login_required
+
 def topics(request):
     context = {"subjects": Subject.objects.filter(parent=None)}
     return render(request, 'topics.html', context)

@@ -102,6 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/feed/'
+LOGOUT_REDIRECT_URL = '/topics'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
