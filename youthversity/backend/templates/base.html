@@ -32,7 +32,7 @@
               <li class="pure-menu-item"><a href="{% url 'feed' %}" class="pure-menu-link">Mein Feed</a></li>
             {% endif %}
             <li class="pure-menu-item"><a href="{% url 'topics' %}" class="pure-menu-link">Themen</a></li>
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Beliebte Projekte</a></li>
+            <li class="pure-menu-item"><a href="{% url 'projects_popular' %}" class="pure-menu-link">Beliebte Projekte</a></li>
             <li class="pure-menu-item"><a href="{% url 'projects_all' %}" class="pure-menu-link">Alle Projekte</a></li>
             {% if user.is_authenticated %}
             <li class="pure-menu-item"><a href="{% url 'projects_saved' %}" class="pure-menu-link">Beobachtete Projekte</a></li>

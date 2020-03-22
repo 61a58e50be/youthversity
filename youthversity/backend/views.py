@@ -332,3 +332,8 @@ def report_comment(request, id):
         form = ReportForm()
 
     return render(request, 'legal/report.html', {'form': form, "id": id})
+
+
+def projects_popular(request):
+    context = dict(posts=Post.objects.order_by('-upvotes')[:9])
+    return render(request, 'projects_popular.html', context=context)
