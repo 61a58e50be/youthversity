@@ -3,6 +3,9 @@
 <div class="header">
     <h1>Feed</h1>
     <h2>All your interesting stuff</h2>
+    {% for post in feedPosts %}
+        <li> {{ post.subject.name }} - {{ post.title }}</li>
+    {% endfor %}
 </div>
 
 <div class="content">
