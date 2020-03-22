@@ -16,6 +16,8 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
  *    without disabling user zoom.
  */
 
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One%7CRaleway&display=swap%27');
+
 html {
   font-family: sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
@@ -28,10 +30,12 @@ html {
 
 body {
   margin: 0;
+  font-family: 'Julius Sans One', sans-serif;
 }
 
 content {
   margin-top: 20;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* HTML5 display definitions
