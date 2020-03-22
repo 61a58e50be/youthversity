@@ -172,6 +172,31 @@ def project_new_comment(request, id):
     return render(request, 'project_new_comment.html', {'form': form, "id": id})
 
 
+@login_required
+def upvote_post(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Post.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../projects/{}/'.format(id))
+
+@login_required
+def upvote_comment(request, id):
+    user = request.user.be_user
+
+    try:
+        curr_upvotes = Comment.objects.filter(pk=id)[0].upvotes
+        curr_upvotes.add(user)
+    except Exception as err:
+        return render(request, '404.html')
+
+    return redirect('../comments/{}/'.format(id))
+
+
 def projects_all(request):
     context = dict(posts=Post.objects.all())
     return render(request, 'projects_all.html', context=context)
