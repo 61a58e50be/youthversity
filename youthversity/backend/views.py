@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from .models import Subject, Post, User, CommentReply, Comment
+from .models import Subject, Post, User, CommentReply, Comment, ViolationReport
 from .forms import SignUpForm
 from .forms import ReportForm, CommentCreationForm
 
@@ -140,6 +140,8 @@ def report(request, id):
         form = ReportForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            msg = form.cleaned_data.get('message')
+            ViolationReport(content=msg, author=request.user.be_user, done=False).save()
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form
@@ -171,4 +173,3 @@ def project_new_comment(request, id):
 
 def profile_redirect(request):
     return HttpResponseRedirect('/me')
-
