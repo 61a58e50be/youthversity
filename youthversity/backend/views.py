@@ -1,18 +1,42 @@
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render
-from .models import Post, Comment, CommentReply
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render, redirect
+
+from .models import Subject, Post, User, CommentReply
+from .forms import SignUpForm
 
 
-from .models import Subject, Post
-from django.http import HttpResponse
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            auth_user = form.save(commit=False)
+            auth_user.save()
+
+            username = form.cleaned_data.get('username')
+            if not username:
+                raise HttpResponseBadRequest('Username empty.')
+            print(username)
+            #auth_user.be_user = User(name=username)
+            be_user = User(name=username, auth_user=auth_user)
+            be_user.save()
+
+            raw_password = form.cleaned_data.get('password1')
+            # user = authenticate(username=username, password=raw_password)
+            # print(user)
+            login(request, auth_user)
+
+            return redirect('feed')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 # Create your views here.
 @login_required
 def index(request):
-    user = request.user.id
-    context = dict(user=user)
+    context = dict(user=request.user.be_user)
     return render(request, 'index.html', context=context)
 
 
