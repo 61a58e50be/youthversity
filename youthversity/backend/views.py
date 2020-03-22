@@ -3,11 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
+from .models import Subject, Post, User, CommentReply, Comment, ViolationReport
+from .forms import SignUpForm, ProjectForm
 from .forms import ReportForm, CommentCreationForm
+import random
+from itertools import chain
 from django.urls import reverse
-from .forms import SignUpForm
-from .models import Subject, Post, User, Comment, ViolationReport
-
 
 def signup(request):
     if request.method == 'POST':
@@ -39,7 +40,73 @@ def index(request):
 
 @login_required
 def feed(request):
-    context = {}
+    # get different variables used to evaluate feed
+    user = request.user.be_user
+    userPosts = Post.objects.filter(author=user)
+    userComments = Comment.objects.filter(author=user)
+    subjects = Subject.objects.all()
+    likedPosts = Post.objects.order_by('-upvotes')[:2]
+
+    # create list containing importance-values of all subjects
+    values = []
+    for i in range(len(subjects)):
+        values.append(0)
+
+    for post in userPosts:
+        index = 0
+        for i, item in enumerate(subjects):
+            if item == post.subject:
+                index = i
+                break
+        values[index] += 3
+
+    for comment in userComments:
+        index = 0
+        for i, item in enumerate(subjects):
+            if item == comment.parent.subject:
+                index = i
+                break
+        values[index] += 1
+
+    # get three most important subjects
+    feedSubjects = []
+
+    for i in range(3):
+        if max(values) == 0:
+            index = random.randint(0, len(subjects)-1)
+            feedSubjects.append(subjects[index])
+        else:
+            index = values.index(max(values))
+            feedSubjects.append(subjects[values.index(max(values))])
+        values[index] = 0
+
+    # select posts
+    feedPosts1 = Post.objects.filter(subject=feedSubjects[0]).order_by('-created')
+    if len(feedPosts1) > 4:
+        feedPosts1 = feedPosts1[:4]
+    feedPosts2 = Post.objects.filter(subject=feedSubjects[1]).order_by('-created')
+    if len(feedPosts2) > 3:
+        feedPosts2 = feedPosts2[:3]
+    feedPosts3 = Post.objects.filter(subject=feedSubjects[2]).order_by('-created')
+    if len(feedPosts3) > 3:
+        feedPosts3 = feedPosts3[:3]
+
+    feedPosts = list(chain(feedPosts1, feedPosts2, feedPosts3))
+
+    # add two most liked projects if not already suggested
+    for i in range(2):
+        alreadyUsed = False
+        print(likedPosts[i])
+        for n in feedPosts:
+            print(n)
+            if n == likedPosts[i]:
+                alreadyUsed = True
+                break
+    print(alreadyUsed)
+    if alreadyUsed == False:
+        feedPosts = list(chain(feedPosts, likedPosts))
+
+    context = {"feedPosts" : feedPosts}
     return render(request, 'feed.html', context)
 
 
@@ -183,6 +250,29 @@ def project_new_comment(request, id):
 
     return render(request, 'project_new_comment.html', {'form': form, "id": id})
 
+
+@login_required
+def projects_new(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            user = request.user.be_user
+            # get data submitted in the form
+            content = form.cleaned_data.get('content')
+            subject = form.cleaned_data.get('subject')
+            title = form.cleaned_data.get('title')
+            for s in Subject.objects.all():
+                if s.name == subject:
+                    subject = s
+                    break
+            # insert entry in database
+            p = Post(content=content, author=user, edited=False, type='post', subject=subject, visibility='all', title=title)
+            p.save()
+            return render(request, 'index.html')
+    else:
+        form = ProjectForm()
+    context = {'form':form}
+    return render(request, 'projects_new.html', context)
 
 @login_required
 def upvote_post(request, id):
