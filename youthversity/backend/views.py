@@ -117,7 +117,11 @@ def feed(request):
 
 
 def projects_id(request, id):
-    context = {"Post": Post.objects.filter(pk=id)[0],"Comments": Comment.objects.filter(parent=Post.objects.all()[id])}
+    post = Post.objects.get(pk=id)
+    context = {
+        "Post": post,
+        "Comments": Comment.objects.filter(parent=post)
+        }
     return render(request, 'project.html', context)
 
 
@@ -246,7 +250,7 @@ def project_new_comment(request, id):
         form = CommentCreationForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            post = Post.objects.all()[id]
+            post = Post.objects.get(pk=id)
             text = request.POST.get('content')
             Comment.objects.create(parent=post, author=request.user.be_user, edited=False, content=text, type='comment')
             return HttpResponseRedirect('/projects/' + str(id))
