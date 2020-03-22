@@ -19,6 +19,7 @@
 
 
 <h3>Beiträge</h3>
+<a class="pure-button" href="{% url 'project_new_comment' Post.id %}">Neuer Beitrag</a>
     <ul>
     {% for comment in Comments %}
       <li> {{ comment.content }} - {{ comment.author }}</li>
