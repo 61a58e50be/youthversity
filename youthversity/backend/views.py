@@ -3,7 +3,7 @@ from itertools import chain
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect)
 from django.shortcuts import redirect, render
@@ -49,7 +49,7 @@ def feed(request):
     userPosts = Post.objects.filter(author=user)
     userComments = Comment.objects.filter(author=user)
     subjects = Subject.objects.all()
-    likedPosts = Post.objects.order_by('-upvotes')[:2]
+    likedPosts = Post.most_popular.all()[:2]
 
     # create list containing importance-values of all subjects
     values = []
@@ -98,20 +98,10 @@ def feed(request):
     if len(feedPosts3) > 3:
         feedPosts3 = feedPosts3[:3]
 
-    feedPosts = list(chain(feedPosts1, feedPosts2, feedPosts3))
+    feedPosts = set(chain(feedPosts1, feedPosts2, feedPosts3))
 
     # add two most liked projects if not already suggested
-    for i in range(2):
-        alreadyUsed = False
-        print(likedPosts[i])
-        for n in feedPosts:
-            print(n)
-            if n == likedPosts[i]:
-                alreadyUsed = True
-                break
-    print(alreadyUsed)
-    if alreadyUsed == False:
-        feedPosts = list(chain(feedPosts, likedPosts))
+    feedPosts = set(chain(feedPosts, likedPosts))
 
     context = {"feedPosts": feedPosts}
     return render(request, 'feed.html', context)
@@ -124,8 +114,8 @@ def projects_id(request, id):
     post.calls += 1
     post.save()
     context = {
-        "Post": post,
-        "Comments": Comment.objects.filter(parent=post)
+        "post": post,
+        "comments": Comment.objects.filter(parent=post)
     }
     return render(request, 'project.html', context)
 
@@ -316,10 +306,25 @@ def upvote_post(request, id):
     user = request.user.be_user
 
     try:
-        curr_upvotes = Post.objects.filter(pk=id)[0].upvotes
-        curr_upvotes.add(user)
+        curr_upvotes = Post.objects.get(pk=id).upvotes
     except Exception as err:
         return render(request, '404.html')
+
+    curr_upvotes.add(user)
+
+    return redirect(reverse('projects_id', kwargs={"id": id}))
+
+
+@login_required
+def save_project(request, id):
+    user = request.user.be_user
+
+    try:
+        post = Post.objects.get(pk=id)
+    except Exception as err:
+        return render(request, '404.html')
+
+    user.saved_posts.add(post)
 
     return redirect(reverse('projects_id', kwargs={"id": id}))
 
@@ -365,7 +370,9 @@ def report_comment(request, id):
 
 
 def projects_popular(request):
-    context = dict(posts=Post.objects.order_by('-upvotes')[:9])
+    # get the 9 posts with the most upvotes
+    posts = Post.most_popular.all()[:9]
+    context = dict(posts=posts)
     return render(request, 'projects_popular.html', context=context)
 
 

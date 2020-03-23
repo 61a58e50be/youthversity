@@ -85,6 +85,10 @@
   float: right;
 }
 
+.youthversity-upvote-box .pure-button {
+  margin: 2px;
+}
+
 .youthversity-footer {
   font-size: x-small;
   position: fixed;
@@ -97,4 +101,23 @@
 .youthversity-footer a {
   color: #aaa;
   margin: 20px 3px;
+}
+
+.youthversity-topics {
+  text-decoration: none;
+  color: #aaa;
+}
+
+.youthversity-comments-text {
+  text-decoration: none;
+  color: #aaa;
+}
+
+.youthversity-comments-projects-view {
+  text-decoration: none;
+  color: black;
+}
+
+.youthversity-error-text {
+  color: red;
 }
