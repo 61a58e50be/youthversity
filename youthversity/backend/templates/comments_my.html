@@ -8,7 +8,7 @@
   <div class="pure-g">
     {% for comment in Comments %}
     <div class="pure-u-1 pure-u-md-1-2">
-      <a href="{% url 'projects_id' comment.get_parent_post.id %}" style="text-decoration: none;  color: #aaa ;">
+      <a href="{% url 'projects_id' comment.get_parent_post.id %}" class="youthversity-comments-text ">
         <div class="youthversity-comment-box-single">
           <label class="youthversity-comment-author">{{ comment.parent.title }} </label>
           <label class="youthversity-comment-date">{{ comment.created }} </label><br>
