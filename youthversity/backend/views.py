@@ -49,7 +49,7 @@ def feed(request):
     userPosts = Post.objects.filter(author=user)
     userComments = Comment.objects.filter(author=user)
     subjects = Subject.objects.all()
-    likedPosts = Post.objects.order_by('-upvotes')[:2]
+    likedPosts = Post.most_popular.all()[:2]
 
     # create list containing importance-values of all subjects
     values = []
@@ -366,7 +366,6 @@ def report_comment(request, id):
 
 def projects_popular(request):
     # get the 9 posts with the most upvotes
-    posts = Post.objects.annotate(upvote_count=Count('upvotes')) \
-        .order_by('-upvote_count')[:9]
+    posts = Post.most_popular.all()[:9]
     context = dict(posts=posts)
     return render(request, 'projects_popular.html', context=context)
