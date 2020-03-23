@@ -49,7 +49,7 @@ def feed(request):
     userPosts = Post.objects.filter(author=user)
     userComments = Comment.objects.filter(author=user)
     subjects = Subject.objects.all()
-    likedPosts = Post.objects.order_by('-upvotes')[:2]
+    likedPosts = Post.most_popular.all()[:2]
 
     # create list containing importance-values of all subjects
     values = []
@@ -98,20 +98,10 @@ def feed(request):
     if len(feedPosts3) > 3:
         feedPosts3 = feedPosts3[:3]
 
-    feedPosts = list(chain(feedPosts1, feedPosts2, feedPosts3))
+    feedPosts = set(chain(feedPosts1, feedPosts2, feedPosts3))
 
     # add two most liked projects if not already suggested
-    for i in range(2):
-        alreadyUsed = False
-        print(likedPosts[i])
-        for n in feedPosts:
-            print(n)
-            if n == likedPosts[i]:
-                alreadyUsed = True
-                break
-    print(alreadyUsed)
-    if alreadyUsed == False:
-        feedPosts = list(chain(feedPosts, likedPosts))
+    feedPosts = set(chain(feedPosts, likedPosts))
 
     context = {"feedPosts": feedPosts}
     return render(request, 'feed.html', context)
@@ -364,7 +354,6 @@ def report_comment(request, id):
 
 def projects_popular(request):
     # get the 9 posts with the most upvotes
-    posts = Post.objects.annotate(upvote_count=Count('upvotes')) \
-        .order_by('-upvote_count')[:9]
+    posts = Post.most_popular.all()[:9]
     context = dict(posts=posts)
     return render(request, 'projects_popular.html', context=context)

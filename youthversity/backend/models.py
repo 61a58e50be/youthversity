@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User as AuthUser
 from django.db import models
 
-# Create your models here.
+from .managers import PostMostUpvotesManager
+
 
 class CommonInfo(models.Model):
     created = models.DateTimeField(auto_now=True)
@@ -60,6 +61,10 @@ class ContentBase(CommonInfo):
     edited = models.BooleanField()
     type = models.CharField(max_length=10)
     upvotes = models.ManyToManyField(User)
+
+    # Model managers
+    objects = models.Manager()  # The default manager.
+    most_popular = PostMostUpvotesManager()  # custom manager sorting by upvotes
 
     class Meta:
         abstract = True
