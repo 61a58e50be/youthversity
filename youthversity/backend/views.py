@@ -173,8 +173,8 @@ def projects_filter(request):
         )
         return render(request, 'projects_filter.html', context)
 
-    return HttpResponseBadRequest('400 - Filter not recognized')
-
+    # when no known filter is set, redirect to all projects page
+    return HttpResponseRedirect(reverse('projects_all'))
 
 def imprint(request):
     return render(request, 'legal/imprint.html')
