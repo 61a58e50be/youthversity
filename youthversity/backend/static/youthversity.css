@@ -9,7 +9,7 @@
 }
 
 .post-overview-all {
-  background-color: #93c0c3;
+  background-color: var(--primary-color);
   margin: 0.5em;
   padding: 0.5em;
   color: black;
@@ -54,7 +54,7 @@
 }
 
 .youthversity-comment-box-single {
-  background-color: #EEF5EE;
+  background-color: var(--primary-color);
   margin: 2px;
   padding: 2px;
 }
