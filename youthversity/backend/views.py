@@ -113,8 +113,8 @@ def projects_id(request, id):
     post.calls += 1
     post.save()
     context = {
-        "Post": post,
-        "Comments": Comment.objects.filter(parent=post)
+        "post": post,
+        "comments": Comment.objects.filter(parent=post)
     }
     return render(request, 'project.html', context)
 
@@ -305,10 +305,25 @@ def upvote_post(request, id):
     user = request.user.be_user
 
     try:
-        curr_upvotes = Post.objects.filter(pk=id)[0].upvotes
-        curr_upvotes.add(user)
+        curr_upvotes = Post.objects.get(pk=id).upvotes
     except Exception as err:
         return render(request, '404.html')
+
+    curr_upvotes.add(user)
+
+    return redirect(reverse('projects_id', kwargs={"id": id}))
+
+
+@login_required
+def save_project(request, id):
+    user = request.user.be_user
+
+    try:
+        post = Post.objects.get(pk=id)
+    except Exception as err:
+        return render(request, '404.html')
+
+    user.saved_posts.add(post)
 
     return redirect(reverse('projects_id', kwargs={"id": id}))
 

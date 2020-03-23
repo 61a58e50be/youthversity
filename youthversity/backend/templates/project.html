@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="header">
-  <h1>{{ Post.title }}</h1>
-  <h2>By {{ Post.author.name }}</h2>
-  {% if Post.edited %}
+  <h1>{{ post.title }}</h1>
+  <h2>By {{ post.author.name }}</h2>
+  {% if post.edited %}
   <h3>edited</h3>
   {% endif %}
 </div>
@@ -11,14 +11,18 @@
 <div class="content">
 
 
-  <p> {{Post.content}}</p>
+  <p> {{post.content}}</p>
 
   <div class="youthversity-upvote-box">
 
-    Aufrufe: {{ Post.calls }}<br>
-    Sterne: {{ Post.upvotes.count }}<br>
-    {% if user.be_user not in Post.upvotes.all %}
-    <a class="pure-button" href="{% url 'upvote_post' Post.id %}">Als Favorit markieren</a>
+    Aufrufe: {{ post.calls }}<br>
+    Sterne: {{ post.upvotes.count }}<br>
+    {% if user.be_user not in post.upvotes.all %}
+    <a class="pure-button" href="{% url 'upvote_post' post.id %}">Als Favorit markieren</a>
+    <br>
+    {% endif %}
+    {% if post not in user.be_user.saved_posts.all %}
+    <a class="pure-button" href="{% url 'save_post' post.id %}">Projekt merken</a>
     {% endif %}
 
   </div>
@@ -29,8 +33,8 @@
 
   <div class="youthversity-comment-box">
     <h3>Beiträge</h3>
-    <a class="pure-button" href="{% url 'project_new_comment' Post.id %}">Neuer Beitrag</a>
-    {% for comment in Comments %}
+    <a class="pure-button" href="{% url 'project_new_comment' post.id %}">Neuer Beitrag</a>
+    {% for comment in comments %}
     <div class="youthversity-comment-box-single">
       <label class="youthversity-comment-author">{{ comment.author.name }} </label>
       <label class="youthversity-comment-date">{{ comment.created }} </label><br>
