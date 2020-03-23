@@ -2,10 +2,11 @@
 
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="{% static "variables.css" %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static "variables.css" %}">
   <link rel="stylesheet" href="{% static "pure.css" %}">
   <link rel="stylesheet" href="{% static "grids-responsive.css" %}">
   <link rel="stylesheet" href="{% static "youthversity.css" %}">
@@ -13,11 +14,12 @@
   <link rel="stylesheet" href="{% static "sidemenu.css" %}">
 
 </head>
+
 <body>
   <!-- Menu toggle -->
   <a href="#menu" id="menuLink" class="menu-link">
-      <!-- Hamburger icon -->
-      <span></span>
+    <!-- Hamburger icon -->
+    <span></span>
   </a>
 
   <div id="layout">
@@ -26,30 +28,30 @@
         <a class="pure-menu-heading" href="{% url 'feed' %}"><img src="{% static "logo.png" %}" class="pure-img"></a>
 
         <ul class="pure-menu-list">
-            {% if not user.is_authenticated %}
-              <li class="pure-menu-item"><a href="{% url 'login' %}" class="pure-menu-link">Login</a></li>
-              <li class="pure-menu-item"><a href="{% url 'signup' %}" class="pure-menu-link">Signup</a></li>
-            {% else %}
-              <li class="pure-menu-item"><a href="{% url 'feed' %}" class="pure-menu-link">Mein Feed</a></li>
-            {% endif %}
-            <li class="pure-menu-item"><a href="{% url 'topics' %}" class="pure-menu-link">Themen</a></li>
-            <li class="pure-menu-item"><a href="{% url 'projects_popular' %}" class="pure-menu-link">Beliebte Projekte</a></li>
-            <li class="pure-menu-item"><a href="{% url 'projects_all' %}" class="pure-menu-link">Alle Projekte</a></li>
-            {% if user.is_authenticated %}
-            <li class="pure-menu-item"><a href="{% url 'projects_saved' %}" class="pure-menu-link">Beobachtete Projekte</a></li>
-            <li class="pure-menu-item"><a href="{% url 'projects_new' %}" class="pure-menu-link">Neues Projekt</a></li>
-            <li class="pure-menu-item"><a href="{% url 'projects_my' %}" class="pure-menu-link">Meine Projekte</a></li>
-            <li class="pure-menu-item"><a href="{% url 'comments_my' %}" class="pure-menu-link">Meine Beiträge</a></li>
-            {% endif %}
+          {% if not user.is_authenticated %}
+          <li class="pure-menu-item"><a href="{% url 'login' %}" class="pure-menu-link">Login</a></li>
+          <li class="pure-menu-item"><a href="{% url 'signup' %}" class="pure-menu-link">Signup</a></li>
+          {% else %}
+          <li class="pure-menu-item"><a href="{% url 'feed' %}" class="pure-menu-link">Mein Feed</a></li>
+          {% endif %}
+          <li class="pure-menu-item"><a href="{% url 'topics' %}" class="pure-menu-link">Themen</a></li>
+          <li class="pure-menu-item"><a href="{% url 'projects_popular' %}" class="pure-menu-link">Beliebte Projekte</a></li>
+          <li class="pure-menu-item"><a href="{% url 'projects_all' %}" class="pure-menu-link">Alle Projekte</a></li>
+          {% if user.is_authenticated %}
+          <li class="pure-menu-item"><a href="{% url 'projects_saved' %}" class="pure-menu-link">Beobachtete Projekte</a></li>
+          <li class="pure-menu-item"><a href="{% url 'projects_new' %}" class="pure-menu-link">Neues Projekt</a></li>
+          <li class="pure-menu-item"><a href="{% url 'projects_my' %}" class="pure-menu-link">Meine Projekte</a></li>
+          <li class="pure-menu-item"><a href="{% url 'comments_my' %}" class="pure-menu-link">Meine Beiträge</a></li>
+          {% endif %}
 
-            <li class="pure-menu-item"><a href="{% url 'rules' %}" class="pure-menu-link">Regeln</a></li>
-            <li class="pure-menu-item"><a href="{% url 'project_guidelines' %}" class="pure-menu-link">Leitfaden Projekterstellung</a></li>
-            <li class="pure-menu-item"><a href="{% url 'copyright' %}" class="pure-menu-link">Urheberrecht</a></li>
-            <li class="pure-menu-item"><a href="{% url 'faq' %}" class="pure-menu-link">FAQs</a></li>
-            <li class="pure-menu-item"><a href="{% url 'about_us' %}" class="pure-menu-link">Über uns</a></li>
-            {% if user.is_authenticated %}
-              <li class="pure-menu-item"><a href="{% url 'logout' %}" class="pure-menu-link">Logout</a></li>
-            {% endif %}
+          <li class="pure-menu-item"><a href="{% url 'rules' %}" class="pure-menu-link">Regeln</a></li>
+          <li class="pure-menu-item"><a href="{% url 'project_guidelines' %}" class="pure-menu-link">Leitfaden Projekterstellung</a></li>
+          <li class="pure-menu-item"><a href="{% url 'copyright' %}" class="pure-menu-link">Urheberrecht</a></li>
+          <li class="pure-menu-item"><a href="{% url 'faq' %}" class="pure-menu-link">FAQs</a></li>
+          <li class="pure-menu-item"><a href="{% url 'about_us' %}" class="pure-menu-link">Über uns</a></li>
+          {% if user.is_authenticated %}
+          <li class="pure-menu-item"><a href="{% url 'logout' %}" class="pure-menu-link">Logout</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -70,4 +72,5 @@
   </div>
 
 </body>
+
 </html>

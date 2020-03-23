@@ -1,4 +1,3 @@
-
 .youthversity-faq-title {
   color: black;
   font-weight: bold;
@@ -16,7 +15,7 @@
   word-wrap: normal;
 }
 
-.post-overview-title{
+.post-overview-title {
   text-align: center;
   width: 100%;
   display: inline-block;
@@ -50,7 +49,6 @@
 .youthversity-faq-answer {
   margin: 0.5em;
   padding: 0.5em;
-
 }
 
 .youthversity-comment-box-single {
@@ -64,15 +62,14 @@
 }
 
 .youthversity-comment-date {
-    width: 49%;
-    display: inline-block;
-    text-align: right;
+  width: 49%;
+  display: inline-block;
+  text-align: right;
 }
 
-
 .youthversity-comment-author {
-    width: 49%;
-    display: inline-block;
+  width: 49%;
+  display: inline-block;
 }
 
 .youthversity-comment-report {
@@ -100,5 +97,4 @@
 .youthversity-footer a {
   color: #aaa;
   margin: 20px 3px;
-
 }

@@ -1,44 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="header">
-    <h1>{{ Post.title }}</h1>
-      <h2>By {{ Post.author.name }}</h2>
-      {% if Post.edited %}
-          <h3>edited</h3>
-      {% endif %}
+  <h1>{{ Post.title }}</h1>
+  <h2>By {{ Post.author.name }}</h2>
+  {% if Post.edited %}
+  <h3>edited</h3>
+  {% endif %}
 </div>
 
 <div class="content">
 
 
-<p> {{Post.content}}</p>
+  <p> {{Post.content}}</p>
 
-<div class="youthversity-upvote-box">
+  <div class="youthversity-upvote-box">
 
-  Aufrufe: {{ Post.calls }}<br>
-  Sterne: {{ Post.upvotes.count }}<br>
-  {% if user.be_user not in Post.upvotes.all %}
+    Aufrufe: {{ Post.calls }}<br>
+    Sterne: {{ Post.upvotes.count }}<br>
+    {% if user.be_user not in Post.upvotes.all %}
     <a class="pure-button" href="{% url 'upvote_post' Post.id %}">Als Favorit markieren</a>
-  {% endif %}
+    {% endif %}
 
-</div>
-
-
+  </div>
 
 
 
-<div class="youthversity-comment-box">
-  <h3>Beiträge</h3>
+
+
+  <div class="youthversity-comment-box">
+    <h3>Beiträge</h3>
     <a class="pure-button" href="{% url 'project_new_comment' Post.id %}">Neuer Beitrag</a>
     {% for comment in Comments %}
-      <div class="youthversity-comment-box-single">
-        <label class="youthversity-comment-author">{{ comment.author.name }} </label>
-        <label class="youthversity-comment-date">{{ comment.created }} </label><br>
-        <div class="youthversity-comment-content">{{ comment.content }} </div>
-        <a href="{% url 'report_comment' comment.id %}" class="youthversity-comment-report">Melden</a>
+    <div class="youthversity-comment-box-single">
+      <label class="youthversity-comment-author">{{ comment.author.name }} </label>
+      <label class="youthversity-comment-date">{{ comment.created }} </label><br>
+      <div class="youthversity-comment-content">{{ comment.content }} </div>
+      <a href="{% url 'report_comment' comment.id %}" class="youthversity-comment-report">Melden</a>
 
-      </div>
-    {% endfor %}
     </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

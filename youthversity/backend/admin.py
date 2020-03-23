@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Post, Feed, SchoolClass, ViolationReport, Subject, Comment, CommentReply
+from .models import Comment, CommentReply, Feed, Post, SchoolClass, Subject
 from .models import User as Student
+from .models import ViolationReport
 
 
 # Register your models here.
@@ -29,4 +30,3 @@ admin.site.register(ViolationReport)
 admin.site.register(Subject)
 admin.site.register(Comment)
 admin.site.register(CommentReply)
-

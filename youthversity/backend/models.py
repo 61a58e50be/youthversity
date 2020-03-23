@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User as AuthUser
 from django.db import models
 
-
 # Create your models here.
 
 class CommonInfo(models.Model):
@@ -17,12 +16,14 @@ class Feed(models.Model):
 
 
 class User(models.Model):
-    auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, related_name='be_user')
+    auth_user = models.OneToOneField(
+        AuthUser, on_delete=models.CASCADE, related_name='be_user')
     created = models.DateTimeField(auto_now=True, blank=True, null=True)
     last_edited = models.DateTimeField(auto_now=True, blank=True, null=True)
     name = models.CharField(max_length=30)
     type = models.CharField(max_length=10, blank=True, null=True)
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, blank=True, null=True)
+    feed = models.ForeignKey(
+        Feed, on_delete=models.CASCADE, blank=True, null=True)
     language = models.CharField(max_length=2, blank=True, null=True)
     saved_posts = models.ManyToManyField("Post")
     friends = models.ManyToManyField("self")
@@ -30,9 +31,12 @@ class User(models.Model):
     def __str__(self):
         return f"BeUser #{self.id}: '{self.name}'"
 
+
 class SchoolClass(CommonInfo):
-    teachers = models.ManyToManyField(User, related_name="school_classs_member")
-    students = models.ManyToManyField(User, related_name="school_classs_teaching")
+    teachers = models.ManyToManyField(
+        User, related_name="school_classs_member")
+    students = models.ManyToManyField(
+        User, related_name="school_classs_teaching")
     school_name = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
@@ -42,7 +46,8 @@ class ViolationReport(CommonInfo):
     content_id = models.PositiveIntegerField()
     content = models.TextField()
     answer = models.TextField(blank=True, null=True)
-    author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="violation_reports_authored")
+    author = models.ForeignKey(User, blank=True, null=True,
+                               on_delete=models.SET_NULL, related_name="violation_reports_authored")
     processor = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,
                                   related_name="violation_reports_processed")
     done = models.BooleanField()
@@ -50,7 +55,8 @@ class ViolationReport(CommonInfo):
 
 class ContentBase(CommonInfo):
     content = models.TextField()
-    author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="%(class)s_authored")
+    author = models.ForeignKey(User, blank=True, null=True,
+                               on_delete=models.SET_NULL, related_name="%(class)s_authored")
     edited = models.BooleanField()
     type = models.CharField(max_length=10)
     upvotes = models.ManyToManyField(User)
@@ -61,7 +67,8 @@ class ContentBase(CommonInfo):
 
 class Subject(models.Model):
     name = models.CharField(max_length=40)
-    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL, related_name="childs")
+    parent = models.ForeignKey(
+        'self', blank=True, null=True, on_delete=models.SET_NULL, related_name="childs")
 
     def get_parent(self):
         return self.parent if self.parent else self
@@ -79,15 +86,18 @@ class Post(ContentBase):
     def __str__(self):
         return f"Post #{self.id}: '{self.title}' by '{self.author}' in '{self.subject}'"
 
+
 class Comment(ContentBase):
-    parent = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="childs")
+    parent = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="childs")
 
     def get_parent_post(self):
         return self.parent
 
 
 class CommentReply(ContentBase):
-    parent = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="childs")
+    parent = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, related_name="childs")
 
     def get_parent_post(self):
         return self.parent.parent
