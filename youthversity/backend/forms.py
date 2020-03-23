@@ -19,7 +19,7 @@ class SignUpForm(UserCreationForm):
 
 class ReportForm(forms.Form):
     message = forms.CharField(
-        label='Bitte beschreibe warum du den Post melden möchtest.', max_length=1000)
+        label='Bitte beschreibe warum du den Post melden möchtest.', max_length=3000, widget=forms.Textarea)
 
     class Meta:
         model = ViolationReport
@@ -29,7 +29,8 @@ class ReportForm(forms.Form):
 
 
 class CommentCreationForm(forms.Form):
-    content = forms.CharField(label='Dein Kommentar', max_length=1000)
+    content = forms.CharField(label='Dein Kommentar',
+                              max_length=3000, widget=forms.Textarea)
 
 
 class ProjectForm(forms.Form):
