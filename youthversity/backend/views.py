@@ -98,7 +98,7 @@ def feed(request):
     if len(feedPosts3) > 3:
         feedPosts3 = feedPosts3[:3]
 
-    feedPosts = list(chain(feedPosts1, feedPosts2, feedPosts3))
+    feedPosts = set(chain(feedPosts1, feedPosts2, feedPosts3))
 
     # add two most liked projects if not already suggested
     for i in range(2):
@@ -111,7 +111,9 @@ def feed(request):
                 break
     print(alreadyUsed)
     if alreadyUsed == False:
-        feedPosts = list(chain(feedPosts, likedPosts))
+        feedPosts = set(chain(feedPosts, likedPosts))
+
+    print(feedPosts)
 
     context = {"feedPosts": feedPosts}
     return render(request, 'feed.html', context)
