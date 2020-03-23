@@ -1,18 +1,17 @@
-from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, Http404
-from django.shortcuts import render, redirect
-
-from .models import Subject, Post, User, CommentReply, Comment, ViolationReport
-from .forms import SignUpForm, ProjectForm
-from .forms import ReportForm, CommentCreationForm
 import random
 from itertools import chain
-from django.urls import reverse
-from .forms import SignUpForm
-from .models import Subject, Post, User, Comment, ViolationReport
-from .ownUtilities.servermail import serverStatus
+
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
+                         HttpResponseRedirect)
+from django.shortcuts import redirect, render
+from django.urls import reverse
+
+from .forms import CommentCreationForm, ProjectForm, ReportForm, SignUpForm
+from .models import Comment, CommentReply, Post, Subject, User, ViolationReport
+from .ownUtilities.servermail import serverStatus
 
 
 def signup(request):
@@ -78,7 +77,7 @@ def feed(request):
 
     for i in range(3):
         if max(values) == 0:
-            index = random.randint(0, len(subjects)-1)
+            index = random.randint(0, len(subjects) - 1)
             feedSubjects.append(subjects[index])
         else:
             index = values.index(max(values))
@@ -86,13 +85,16 @@ def feed(request):
         values[index] = 0
 
     # select posts
-    feedPosts1 = Post.objects.filter(subject=feedSubjects[0]).order_by('-created')
+    feedPosts1 = Post.objects.filter(
+        subject=feedSubjects[0]).order_by('-created')
     if len(feedPosts1) > 4:
         feedPosts1 = feedPosts1[:4]
-    feedPosts2 = Post.objects.filter(subject=feedSubjects[1]).order_by('-created')
+    feedPosts2 = Post.objects.filter(
+        subject=feedSubjects[1]).order_by('-created')
     if len(feedPosts2) > 3:
         feedPosts2 = feedPosts2[:3]
-    feedPosts3 = Post.objects.filter(subject=feedSubjects[2]).order_by('-created')
+    feedPosts3 = Post.objects.filter(
+        subject=feedSubjects[2]).order_by('-created')
     if len(feedPosts3) > 3:
         feedPosts3 = feedPosts3[:3]
 
@@ -111,7 +113,7 @@ def feed(request):
     if alreadyUsed == False:
         feedPosts = list(chain(feedPosts, likedPosts))
 
-    context = {"feedPosts" : feedPosts}
+    context = {"feedPosts": feedPosts}
     return render(request, 'feed.html', context)
 
 
@@ -123,7 +125,7 @@ def projects_id(request, id):
     context = {
         "Post": post,
         "Comments": Comment.objects.filter(parent=post)
-        }
+    }
     return render(request, 'project.html', context)
 
 
@@ -140,7 +142,7 @@ def subtopics(request, id):
     context = {
         "subjects": childs,
         "parent": Subject.objects.get(pk=id),
-        }
+    }
     return render(request, 'subtopics.html', context)
 
 
@@ -164,7 +166,8 @@ def projects_filter(request):
             filtered = Post.objects.filter(subject=topic)
         else:
             # for main subjects, all subsubjects are included in the results
-            filtered = Post.objects.filter(Q(subject__parent=topic) | Q(subject=topic))
+            filtered = Post.objects.filter(
+                Q(subject__parent=topic) | Q(subject=topic))
 
         # build context for the template rendering
         context = dict(
@@ -175,6 +178,7 @@ def projects_filter(request):
 
     # when no known filter is set, redirect to all projects page
     return HttpResponseRedirect(reverse('projects_all'))
+
 
 def imprint(request):
     return render(request, 'legal/imprint.html')
@@ -202,8 +206,10 @@ def me(request):
 def rules(request):
     return render(request, 'legal/rules.html')
 
+
 def project_guidelines(request):
     return render(request, 'legal/project_guidelines.html')
+
 
 def about_us(request):
     return render(request, 'about_us.html')
@@ -247,8 +253,10 @@ def report(request, id):
         # check whether it's valid:
         if form.is_valid():
             msg = form.cleaned_data.get('message')
-            ViolationReport(content=msg, author=request.user.be_user, done=False, flagged_type='project', content_id=id).save()
-            serverStatus('New Violation report:'+msg+'for project'+str(id))
+            ViolationReport(content=msg, author=request.user.be_user,
+                            done=False, flagged_type='project', content_id=id).save()
+            serverStatus('New Violation report:' +
+                         msg + 'for project' + str(id))
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form
@@ -268,7 +276,8 @@ def project_new_comment(request, id):
         if form.is_valid():
             post = Post.objects.get(pk=id)
             text = request.POST.get('content')
-            Comment.objects.create(parent=post, author=request.user.be_user, edited=False, content=text, type='comment')
+            Comment.objects.create(
+                parent=post, author=request.user.be_user, edited=False, content=text, type='comment')
             return HttpResponseRedirect('/projects/' + str(id))
 
     # if a GET (or any other method) we'll create a blank form
@@ -291,13 +300,15 @@ def projects_new(request):
                 if s.name == subject:
                     subject = s
                     break
-            p = Post(content=content, author=user, edited=False, type='post', subject=subject, visibility='all', title=title)
+            p = Post(content=content, author=user, edited=False,
+                     type='post', subject=subject, visibility='all', title=title)
             p.save()
             return render(request, 'index.html')
     else:
         form = ProjectForm()
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'projects_new.html', context)
+
 
 @login_required
 def upvote_post(request, id):
@@ -309,7 +320,8 @@ def upvote_post(request, id):
     except Exception as err:
         return render(request, '404.html')
 
-    return redirect(reverse('projects_id', kwargs={"id":id}))
+    return redirect(reverse('projects_id', kwargs={"id": id}))
+
 
 @login_required
 def upvote_comment(request, id):
@@ -322,12 +334,13 @@ def upvote_comment(request, id):
     except Exception as err:
         return render(request, '404.html')
 
-    return redirect(reverse('projects_id', kwargs={"id":comment.parent.id}))
+    return redirect(reverse('projects_id', kwargs={"id": comment.parent.id}))
 
 
 def projects_all(request):
     context = dict(posts=Post.objects.all())
     return render(request, 'projects_all.html', context=context)
+
 
 def report_comment(request, id):
     if request.method == 'POST':
@@ -336,8 +349,10 @@ def report_comment(request, id):
         # check whether it's valid:
         if form.is_valid():
             msg = form.cleaned_data.get('message')
-            ViolationReport(content=msg, author=request.user.be_user, done=False,flagged_type='comment', content_id=id).save()
-            serverStatus('New Violation report:' + msg + 'for project' + str(id))
+            ViolationReport(content=msg, author=request.user.be_user,
+                            done=False, flagged_type='comment', content_id=id).save()
+            serverStatus('New Violation report:' +
+                         msg + 'for project' + str(id))
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form

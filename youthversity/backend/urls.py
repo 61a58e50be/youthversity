@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import include, path
 
 from . import views
 
@@ -15,7 +15,8 @@ urlpatterns = [
     path('projects/new/', views.projects_new, name='projects_new'),
     path('projects/<int:id>/', views.projects_id, name='projects_id'),
     path('projects/<int:id>/report/', views.report, name='report'),
-    path('projects/<int:id>/new_comment/', views.project_new_comment, name='project_new_comment'),
+    path('projects/<int:id>/new_comment/',
+         views.project_new_comment, name='project_new_comment'),
     path('projects/saved/', views.projects_saved, name='projects_saved'),
     path('comments/my/', views.comments_my, name='comments_my'),
     # path('help/', views.help, name='help'),
@@ -24,7 +25,8 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('me/', views.me, name='me'),
     path('rules/', views.rules, name='rules'),
-    path('project_guidelines/', views.project_guidelines, name='project_guidelines'),
+    path('project_guidelines/', views.project_guidelines,
+         name='project_guidelines'),
     path('about_us/', views.about_us, name='about_us'),
     path('copyright/', views.copyright, name='copyright'),
     path('profile/', views.me, name='profile'),

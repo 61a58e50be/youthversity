@@ -2,19 +2,19 @@
 
 <div class="pure-g">
   {% for post in posts %}
-    <div class="pure-u-1 pure-u-md-1-3">
-      <div class="post-overview-all">
-        <a href="{% url 'projects_id' post.pk %}" style="text-decoration: none;  color: black ;">
-          <label class="post-overview-title"> {{ post.title }}</label><br>
-          <label class="post-overview-author-name">von {{ post.author.name }} </label><br>
+  <div class="pure-u-1 pure-u-md-1-3">
+    <div class="post-overview-all">
+      <a href="{% url 'projects_id' post.pk %}" style="text-decoration: none;  color: black ;">
+        <label class="post-overview-title"> {{ post.title }}</label><br>
+        <label class="post-overview-author-name">von {{ post.author.name }} </label><br>
 
-          <label class="post-overview-upvotes"> Sterne: {{ post.upvotes.count }} </label>
+        <label class="post-overview-upvotes"> Sterne: {{ post.upvotes.count }} </label>
 
-          {% static "topics_small" as topics_small_base %}
-          <img src="{{ topics_small_base }}/{{ post.subject.get_parent.name }}.png" class="pure-img post-overview-subject" alt="{{post.subject.get_parent.name}} - {{post.subject.name}}" title="{{post.subject.get_parent.name}} - {{post.subject.name}}">
+        {% static "topics_small" as topics_small_base %}
+        <img src="{{ topics_small_base }}/{{ post.subject.get_parent.name }}.png" class="pure-img post-overview-subject" alt="{{post.subject.get_parent.name}} - {{post.subject.name}}" title="{{post.subject.get_parent.name}} - {{post.subject.name}}">
 
-        </a>
-      </div>
+      </a>
     </div>
+  </div>
   {% endfor %}
 </div>

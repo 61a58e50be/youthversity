@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="header">
-    <h1>Topics</h1>
-    <h2>All the topics</h2>
+  <h1>Topics</h1>
+  <h2>All the topics</h2>
 </div>
 
 <div class="content">
 
   <h1>{{ username }}</h1><br>
-    <div><p>{{ type }}</p></div>
+  <div>
+    <p>{{ type }}</p>
+  </div>
 
 
-<div><p>E-Mail: {{ email }}</p></div>
-<div><p>Language: {{ language }}</p></div>
+  <div>
+    <p>E-Mail: {{ email }}</p>
+  </div>
+  <div>
+    <p>Language: {{ language }}</p>
+  </div>
 
 </div>
 

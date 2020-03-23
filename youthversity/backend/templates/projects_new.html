@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="header">
-    <h1>Neues Projekt</h1>
+  <h1>Neues Projekt</h1>
 </div>
 
 <div class="content">
@@ -10,16 +10,16 @@
     <fieldset>
       {% csrf_token %}
       {% for field in form %}
-        <div class="pure-control-group">
-          {{ field.label_tag }}
-          {{ field }}
-          {% if field.help_text %}
-            <span class="pure-form-message-inline">{{ field.help_text }}</span>
-          {% endif %}
-          {% for error in field.errors %}
-            <p style="color: red;">{{ error }}</p>
-          {% endfor %}
-        </div>
+      <div class="pure-control-group">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+        <span class="pure-form-message-inline">{{ field.help_text }}</span>
+        {% endif %}
+        {% for error in field.errors %}
+        <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+      </div>
       {% endfor %}
       <div class="pure-controls">
         <input type="submit" value="Submit" class="pure-button pure-button-primary">
