@@ -113,8 +113,8 @@ def projects_id(request, id):
     post.calls += 1
     post.save()
     context = {
-        "Post": post,
-        "Comments": Comment.objects.filter(parent=post)
+        "post": post,
+        "comments": Comment.objects.filter(parent=post)
     }
     return render(request, 'project.html', context)
 

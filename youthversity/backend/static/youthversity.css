@@ -85,6 +85,10 @@
   float: right;
 }
 
+.youthversity-upvote-box .pure-button {
+  margin: 2px;
+}
+
 .youthversity-footer {
   font-size: x-small;
   position: fixed;
