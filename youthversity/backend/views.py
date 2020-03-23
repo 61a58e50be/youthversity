@@ -101,19 +101,7 @@ def feed(request):
     feedPosts = set(chain(feedPosts1, feedPosts2, feedPosts3))
 
     # add two most liked projects if not already suggested
-    for i in range(2):
-        alreadyUsed = False
-        print(likedPosts[i])
-        for n in feedPosts:
-            print(n)
-            if n == likedPosts[i]:
-                alreadyUsed = True
-                break
-    print(alreadyUsed)
-    if alreadyUsed == False:
-        feedPosts = set(chain(feedPosts, likedPosts))
-
-    print(feedPosts)
+    feedPosts = set(chain(feedPosts, likedPosts))
 
     context = {"feedPosts": feedPosts}
     return render(request, 'feed.html', context)
