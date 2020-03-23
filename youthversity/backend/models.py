@@ -27,6 +27,8 @@ class User(models.Model):
     saved_posts = models.ManyToManyField("Post")
     friends = models.ManyToManyField("self")
 
+    def __str__(self):
+        return f"BeUser #{self.id}: '{self.name}'"
 
 class SchoolClass(CommonInfo):
     teachers = models.ManyToManyField(User, related_name="school_classs_member")
@@ -64,6 +66,8 @@ class Subject(models.Model):
     def get_parent(self):
         return self.parent if self.parent else self
 
+    def __str__(self):
+        return f"Subject #{self.id}: '{self.name}' parent '{self.parent}'"
 
 
 class Post(ContentBase):
@@ -72,6 +76,8 @@ class Post(ContentBase):
     visibility = models.CharField(max_length=10)
     calls = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return f"Post #{self.id}: '{self.title}' by '{self.author}' in '{self.subject}'"
 
 class Comment(ContentBase):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="childs")

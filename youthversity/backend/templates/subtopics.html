@@ -13,7 +13,7 @@
 <div class="pure-g">
   {% for subject in subjects %}
     <div class="pure-u-1 pure-u-sm-1-3">
-      <a href="{% url 'projects_filter' %}?topics={{ subject.id }}" style="text-decoration: none; color:#aaa;">
+      <a href="{% url 'projects_filter' %}?topic={{ subject.id }}" style="text-decoration: none; color:#aaa;">
         {% static "topics" as subject_base %}
         <!-- <img src="{{ subject_base }}/{{ subject.name }}.png" class="pure-img"> -->
         <center>{{ subject.name }}</center>

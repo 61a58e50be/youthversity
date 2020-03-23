@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 
 from .models import Subject, Post, User, CommentReply, Comment, ViolationReport
@@ -11,9 +11,8 @@ from itertools import chain
 from django.urls import reverse
 from .forms import SignUpForm
 from .models import Subject, Post, User, Comment, ViolationReport
-
 from .ownUtilities.servermail import serverStatus
-
+from django.db.models import Q
 
 
 def signup(request):
@@ -136,7 +135,7 @@ def topics(request):
 def subtopics(request, id):
     childs = Subject.objects.filter(parent=id)
     if not childs:
-        url = reverse('projects_filter') + "?topics={}".format(id)
+        url = reverse('projects_filter') + "?topic={}".format(id)
         return HttpResponseRedirect(url)
     context = {
         "subjects": childs,
@@ -144,24 +143,38 @@ def subtopics(request, id):
         }
     return render(request, 'subtopics.html', context)
 
-@login_required
+
 def projects_filter(request):
     if request.method != 'GET':
         # Todo: implement an error page
-        return HttpResponse('400 - Bad Request')
+        return HttpResponseBadRequest('400 - Bad Request')
 
-    topics = request.GET.get('topics')
+    topic = request.GET.get('topic')
 
-    if topics:
-        filtered = Post.objects.filter(pk__in=topics)
+    if topic != None:
+        # filter for a single subject
+        try:
+            subject = Subject.objects.get(pk=topic)
+        except Subject.DoesNotExist:
+            # if the id is invalid
+            raise Http404('No such subject')
+
+        # differentiate between subsubjects and main subjects.
+        if subject.parent:
+            filtered = Post.objects.filter(subject=topic)
+        else:
+            # for main subjects, all subsubjects are included in the results
+            filtered = Post.objects.filter(Q(subject__parent=topic) | Q(subject=topic))
+
+        # build context for the template rendering
         context = dict(
             posts=filtered,
-            query=list(request.GET.items())
+            query=f"Projekte in {subject.name}"
         )
         return render(request, 'projects_filter.html', context)
 
-    return HttpResponse('400 - Bad Request')
-
+    # when no known filter is set, redirect to all projects page
+    return HttpResponseRedirect(reverse('projects_all'))
 
 def imprint(request):
     return render(request, 'legal/imprint.html')
