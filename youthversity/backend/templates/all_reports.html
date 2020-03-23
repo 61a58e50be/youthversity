@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="header">
+  <h1>Violation reports</h1>
+<a class="pure-button"href="{% url 'pending_reports' %}">Only show pending reports</a>
+</div>
+
+<div class="content">
+{% for report in reports %}
+  <div>
+      <a href="{% url 'reports_id' report.id %}">Report {{ report.id }} </a><br>
+      Done:{{ report.done }}
+  </div>
+ {% endfor %}
+</div>
+
+{% endblock %}

@@ -20,6 +20,7 @@
     {% if user.be_user not in Post.upvotes.all %}
     <a class="pure-button" href="{% url 'upvote_post' Post.id %}">Als Favorit markieren</a>
     {% endif %}
+    <a class="pure-button" href="{% url 'report' Post.id  %}">Melden</a>
 
   </div>
 

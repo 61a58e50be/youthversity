@@ -63,9 +63,9 @@ class ProjectForm(forms.Form):
                       ("Informatik", "Informatik"),
                       ("Sonstige", "Sonstige")]
 
-    #subjectChoices = []
+    # subjectChoices = []
     # for subject in Subject.objects.all():
-    #subjectChoices += [(subject, subject.name)]
+    # subjectChoices += [(subject, subject.name)]
     subject = forms.CharField(
         label='Thema', widget=forms.Select(choices=subjectChoices))
     content = forms.CharField(label='Text', widget=forms.Textarea)
@@ -78,3 +78,8 @@ class ProjectForm(forms.Form):
             "subject",
             "content",
         )
+
+
+class ReportCheckForm(forms.Form):
+    answer = forms.CharField(max_length=2000, label='answer')
+    violation = forms.BooleanField(label='violation')
