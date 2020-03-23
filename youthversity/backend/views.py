@@ -3,7 +3,7 @@ from itertools import chain
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect)
 from django.shortcuts import redirect, render
@@ -363,5 +363,8 @@ def report_comment(request, id):
 
 
 def projects_popular(request):
-    context = dict(posts=Post.objects.order_by('-upvotes')[:9])
+    # get the 9 posts with the most upvotes
+    posts = Post.objects.annotate(upvote_count=Count('upvotes')) \
+        .order_by('-upvote_count')[:9]
+    context = dict(posts=posts)
     return render(request, 'projects_popular.html', context=context)
