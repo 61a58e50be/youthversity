@@ -98,3 +98,22 @@
   color: #aaa;
   margin: 20px 3px;
 }
+
+.youthversity-topics {
+  text-decoration: none;
+  color: #aaa;
+}
+
+.youthversity-comments-text {
+  text-decoration: none;
+  color: #aaa;
+}
+
+.youthversity-comments-projects-view {
+  text-decoration: none;
+  color: black;
+}
+
+.youthversity-error-text {
+  color: red;
+}
