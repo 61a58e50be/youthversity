@@ -125,6 +125,14 @@ Nunc finibus mi a nunc efficitur, a pulvinar metus suscipit. Lorem ipsum dolor s
     c.save()
     c.upvotes.add(teststudent02)
 
+    r = ViolationReport(
+        flagged_type='project',
+        content_id=1,
+        content='complaint',
+        author=teststudent02,
+    )
+    r.save()
+
 
 class Migration(migrations.Migration):
     dependencies = [
