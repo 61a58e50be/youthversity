@@ -131,6 +131,7 @@ Nunc finibus mi a nunc efficitur, a pulvinar metus suscipit. Lorem ipsum dolor s
         content_id=1,
         content='complaint',
         author=teststudent02,
+        done=False,
     )
     r.save()
 
