@@ -11,6 +11,7 @@ def create_test_data(apps, _schema_editor):
     Post = apps.get_model('backend', 'Post')
     Comment = apps.get_model('backend', 'Comment')
     Subject = apps.get_model('backend', 'Subject')
+    ViolationReport = apps.get_model('backend', 'ViolationReport')
 
     # first, we create a superuser
     # admin, admin
