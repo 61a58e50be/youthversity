@@ -2,6 +2,7 @@ from django.contrib.auth.models import User as AuthUser
 from django.db import models
 from .managers import PostMostUpvotesManager
 
+
 # Create your models here.
 class CommonInfo(models.Model):
     created = models.DateTimeField(auto_now=True)
