@@ -400,9 +400,10 @@ def reports_id(request, id):
                 if report.flagged_type == 'project':
                     p = Post.objects.filter(id=report.content_id)[0]
                     p.blocked = True
-                    report.result == True
-                    p.save()
+                    report.result = True
                     report.save()
+                    p.save()
+
                 elif report.flagged_type == 'comment':
                     c = Comment.objects.filter(id=report.content_id)[0]
                     c.blocked = True
