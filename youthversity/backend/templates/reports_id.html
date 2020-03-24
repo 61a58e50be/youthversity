@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="header">
+  <h1>Report {{ report.id }}</h1>
+</div>
+
+<div class="content">
+{% if report.flagged_type == 'project' %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+{% endif %}
+{% if report.flagged_type == 'comment' %}
+<p>{{ comment.content }}</p>
+{% endif %}
+</div>
+    <div>
+    <h1>{{ report.content }}</h1>
+    {% if report.done == False %}
+        <h2>Formular</h2>
+<form action="{% url 'reports_id' report.id %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type='submit'>
+</form>
+    {% endif %}
+{% if report.done %}
+    Answer:{{ report.answer }}<br>
+    Violation:{{ report.result }}
+{% endif %}
+    </div>
+{% endblock %}

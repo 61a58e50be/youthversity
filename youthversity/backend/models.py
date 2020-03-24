@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User as AuthUser
 from django.db import models
-
 from .managers import PostMostUpvotesManager
 
 
+# Create your models here.
 class CommonInfo(models.Model):
     created = models.DateTimeField(auto_now=True)
     last_edited = models.DateTimeField(auto_now=True)
@@ -52,6 +52,7 @@ class ViolationReport(CommonInfo):
     processor = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,
                                   related_name="violation_reports_processed")
     done = models.BooleanField()
+    result = models.BooleanField(default=False)
 
 
 class ContentBase(CommonInfo):
@@ -61,6 +62,7 @@ class ContentBase(CommonInfo):
     edited = models.BooleanField()
     type = models.CharField(max_length=10)
     upvotes = models.ManyToManyField(User)
+    blocked = models.BooleanField(default=False)
 
     # Model managers
     objects = models.Manager()  # The default manager.
