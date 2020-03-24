@@ -293,7 +293,7 @@ def projects_new(request):
             p = Post(content=content, author=user, edited=False,
                      type='post', subject=subject, visibility='all', title=title)
             p.save()
-            return render(request, 'index.html')
+            return redirect(reverse('projects_id', kwargs={"id": p.id}))
     else:
         form = ProjectForm()
     context = {'form': form}
