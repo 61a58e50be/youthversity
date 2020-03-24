@@ -13,19 +13,23 @@
 
   <p> {{post.content}}</p>
 
-  <div class="youthversity-upvote-box">
+  <div class=" pure-g">
+    <div class="pure-u-1 pure-u-md-1-2">
+      Aufrufe: {{ post.calls }}<br>
+      Sterne: {{ post.upvotes.count }}<br>
+    </div>
 
-    Aufrufe: {{ post.calls }}<br>
-    Sterne: {{ post.upvotes.count }}<br>
-    {% if user.be_user not in post.upvotes.all %}
-    <a class="pure-button" href="{% url 'upvote_post' post.id %}">Als Favorit markieren</a>
-    <br>
-    {% endif %}
-    {% if post not in user.be_user.saved_posts.all %}
-    <a class="pure-button" href="{% url 'save_post' post.id %}">Projekt merken</a>
-    {% endif %}
-    <a class="pure-button" href="{% url 'report' post.id  %}">Melden</a>
-
+    <div class="pure-u-1 pure-u-md-1-2 youthversity-upvote-box" align="right">
+      {% if user.be_user not in post.upvotes.all %}
+      <a class="pure-button" href="{% url 'upvote_post' post.id %}">Als Favorit markieren</a>
+      <br>
+      {% endif %}
+      {% if post not in user.be_user.saved_posts.all %}
+      <a class="pure-button" href="{% url 'save_post' post.id %}">Projekt merken</a>
+      <br>
+      {% endif %}
+      <a class="pure-button" href="{% url 'report' post.id  %}">Melden</a>
+    </div>
   </div>
 
 

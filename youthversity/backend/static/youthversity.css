@@ -81,9 +81,7 @@
   font-size: x-small;
 }
 
-.youthversity-upvote-box {
-  float: right;
-}
+.youthversity-upvote-box {}
 
 .youthversity-upvote-box .pure-button {
   margin: 2px;
