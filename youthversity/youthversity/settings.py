@@ -126,3 +126,6 @@ STATIC_URL = '/static/'
 
 CSP_DEFAULT_SRC = ["'self'"]
 
+CSP_STYLE_SRC = ["https://fonts.googleapis.com", "'self'"]
+CSP_FONT_SRC = ["https://fonts.gstatic.com"]
+

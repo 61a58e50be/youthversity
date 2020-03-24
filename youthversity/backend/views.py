@@ -144,7 +144,7 @@ def projects_filter(request):
 
     topic = request.GET.get('topic')
 
-    if topic != None:
+    if topic is not None:
         # filter for a single subject
         try:
             subject = Subject.objects.get(pk=topic)
@@ -294,7 +294,7 @@ def projects_new(request):
             p = Post(content=content, author=user, edited=False,
                      type='post', subject=subject, visibility='all', title=title)
             p.save()
-            return HttpResponseRedirect('/projects/' + str(p.id))
+            return redirect(reverse('projects_id', kwargs={"id": p.id}))
     else:
         form = ProjectForm()
     context = {'form': form}
