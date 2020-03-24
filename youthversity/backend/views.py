@@ -9,7 +9,7 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .forms import CommentCreationForm, ProjectForm, ReportForm, SignUpForm
+from .forms import CommentCreationForm, ProjectForm, ReportForm, SignUpForm, ReportCheckForm
 from .models import Comment, CommentReply, Post, Subject, User, ViolationReport
 from .ownUtilities.servermail import serverStatus
 
@@ -108,7 +108,8 @@ def feed(request):
 
 
 def projects_id(request, id):
-
+    if Post.objects.filter(pk=id)[0].blocked:
+        return HttpResponse('Dieses projekt wurde auf Grund von Verstößen gegen unsere Nutzungsrichtlinie gesperrt')
     post = Post.objects.get(pk=id)
     post.calls += 1
     post.save()
@@ -245,8 +246,8 @@ def report(request, id):
             msg = form.cleaned_data.get('message')
             ViolationReport(content=msg, author=request.user.be_user,
                             done=False, flagged_type='project', content_id=id).save()
-            serverStatus('New Violation report:' +
-                         msg + 'for project' + str(id))
+            # serverStatus('New Violation report:' +
+            # msg + 'for project' + str(id))
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form
@@ -347,6 +348,7 @@ def projects_all(request):
     return render(request, 'projects_all.html', context=context)
 
 
+@login_required
 def report_comment(request, id):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -356,8 +358,8 @@ def report_comment(request, id):
             msg = form.cleaned_data.get('message')
             ViolationReport(content=msg, author=request.user.be_user,
                             done=False, flagged_type='comment', content_id=id).save()
-            serverStatus('New Violation report:' +
-                         msg + 'for project' + str(id))
+            # serverStatus('New Violation report:' +
+            # msg + 'for project' + str(id))
             return HttpResponse('Thanks for submitting, your report will be processed')
 
     # if a GET (or any other method) we'll create a blank form
@@ -372,3 +374,69 @@ def projects_popular(request):
     posts = Post.most_popular.all()[:9]
     context = dict(posts=posts)
     return render(request, 'projects_popular.html', context=context)
+
+
+@login_required
+def all_reports(request):
+    context = dict(reports=ViolationReport.objects.all())
+    return render(request, 'all_reports.html', context=context)
+
+
+def pending_reports(request):
+    context = dict(
+        reports=ViolationReport.objects.filter(done=False)
+    )
+    return render(request, 'pending_reports.html', context=context)
+
+
+def reports_id(request, id):
+    report = ViolationReport.objects.filter(id=id)[0]
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ReportCheckForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            if request.POST.get("violation") == 'on':
+                if report.flagged_type == 'project':
+                    p = Post.objects.filter(id=report.content_id)[0]
+                    p.blocked = True
+                    report.result = True
+                    report.save()
+                    p.save()
+
+                elif report.flagged_type == 'comment':
+                    c = Comment.objects.filter(id=report.content_id)[0]
+                    c.blocked = True
+                    report.result = True
+                    c.save()
+                    report.save()
+            report.answer = request.POST.get("answer")
+            report.processor = request.user.be_user
+            report.done = True
+            print(request.POST.get('violation'))
+            if request.POST.get('violation') == 'on':
+                report.result = True
+
+            else:
+                report.result = False
+            report.save()
+
+            return HttpResponseRedirect('/report/pending')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ReportCheckForm()
+    if report.flagged_type == 'project':
+        context = dict(
+            form=form,
+            report=report,
+            post=Post.objects.filter(id=report.content_id)[0],
+        )
+    elif report.flagged_type == 'comment':
+        context = dict(
+            form=form,
+            report=report,
+            comment=Comment.objects.filter(id=report.content_id)[0],
+        )
+    print(str(form))
+    return render(request, 'reports_id.html', context)

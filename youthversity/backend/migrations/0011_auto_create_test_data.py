@@ -11,6 +11,7 @@ def create_test_data(apps, _schema_editor):
     Post = apps.get_model('backend', 'Post')
     Comment = apps.get_model('backend', 'Comment')
     Subject = apps.get_model('backend', 'Subject')
+    ViolationReport = apps.get_model('backend', 'ViolationReport')
 
     # first, we create a superuser
     # admin, admin
@@ -83,7 +84,7 @@ def create_test_data(apps, _schema_editor):
     # and now some posts
     p = Post(
         content="""
-        
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus quam gravida lacus dictum, non auctor tortor fringilla. Fusce sed pretium sapien. Donec quis aliquet diam. Ut id tortor dignissim, viverra diam eu, consequat urna. Morbi euismod purus et enim molestie accumsan. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse potenti.
 
 Nunc laoreet turpis magna, vel tempor tellus egestas et. Phasellus laoreet ipsum et dignissim dapibus. Nulla vel eros vel metus posuere gravida a at risus. Phasellus eget elit facilisis, euismod sapien sed, congue turpis. Pellentesque pellentesque tellus sed nibh ultrices volutpat. Suspendisse eget imperdiet nisi. In id efficitur risus, non dignissim augue. Donec purus dolor, porta at nunc eget, varius elementum tellus. Nullam lacinia feugiat fermentum. Nulla sit amet orci ante. Nam placerat placerat erat, sit amet aliquet justo gravida non. Sed feugiat risus at lectus tincidunt, non congue lacus viverra. Integer sit amet elit sem. Sed cursus in velit eget aliquet.
@@ -92,7 +93,7 @@ Sed mi quam, porttitor et lacinia in, mattis ac metus. Morbi lacinia justo quis 
 
 Nullam luctus diam vitae augue interdum, nec pellentesque turpis rhoncus. Vestibulum finibus magna a est vulputate dapibus. Suspendisse potenti. Nullam tempus erat a imperdiet tristique. Maecenas vulputate, enim nec interdum cursus, nibh nulla pharetra elit, id eleifend metus elit vitae massa. Donec eu erat eget leo vulputate malesuada nec sed nulla. Aliquam ut sollicitudin ligula. Fusce et turpis ullamcorper, vulputate est vel, congue erat. Proin gravida velit at malesuada pharetra.
 
-Nunc finibus mi a nunc efficitur, a pulvinar metus suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et est ac purus pretium facilisis. Phasellus id urna tristique, aliquam felis eu, vulputate justo. Nulla facilisi. Vestibulum turpis massa, eleifend scelerisque sollicitudin at, ornare sed risus. Donec vel ullamcorper magna. Praesent scelerisque neque vel ultricies ornare. Curabitur augue mauris, convallis non ex quis, dictum suscipit augue. Aenean ullamcorper sem a aliquet sollicitudin. Etiam et arcu in lectus lacinia laoreet quis ac urna. Donec id mi quis velit mattis molestie sed et libero. Nulla et aliquam enim. 
+Nunc finibus mi a nunc efficitur, a pulvinar metus suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et est ac purus pretium facilisis. Phasellus id urna tristique, aliquam felis eu, vulputate justo. Nulla facilisi. Vestibulum turpis massa, eleifend scelerisque sollicitudin at, ornare sed risus. Donec vel ullamcorper magna. Praesent scelerisque neque vel ultricies ornare. Curabitur augue mauris, convallis non ex quis, dictum suscipit augue. Aenean ullamcorper sem a aliquet sollicitudin. Etiam et arcu in lectus lacinia laoreet quis ac urna. Donec id mi quis velit mattis molestie sed et libero. Nulla et aliquam enim.
         """,
         author=teststudent01,
         type="essay",
@@ -125,10 +126,19 @@ Nunc finibus mi a nunc efficitur, a pulvinar metus suscipit. Lorem ipsum dolor s
     c.save()
     c.upvotes.add(teststudent02)
 
+    r = ViolationReport(
+        flagged_type='project',
+        content_id=1,
+        content='complaint',
+        author=teststudent02,
+        done=False,
+    )
+    r.save()
+
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('backend', '0004_auto_20200321_2236'),
+        ('backend', '0010_violationreport_result'),
     ]
 
     operations = [

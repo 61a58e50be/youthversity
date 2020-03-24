@@ -35,4 +35,7 @@ urlpatterns = [
     path('comment/<int:id>/report', views.report_comment, name='report_comment'),
     path('upvote_comment/<int:id>/', views.upvote_comment, name='upvote_comment'),
     path('projects/popular/', views.projects_popular, name='projects_popular'),
+    path('report/all/', views.all_reports, name='all_reports'),
+    path('report/pending/', views.pending_reports, name='pending_reports'),
+    path('report/<int:id>', views.reports_id, name='reports_id'),
 ]

@@ -26,6 +26,7 @@
     {% if post not in user.be_user.saved_posts.all %}
     <a class="pure-button" href="{% url 'save_post' post.id %}">Projekt merken</a>
     {% endif %}
+    <a class="pure-button" href="{% url 'report' post.id  %}">Melden</a>
 
   </div>
 

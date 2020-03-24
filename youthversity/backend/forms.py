@@ -79,3 +79,8 @@ class ProjectForm(forms.Form):
             "subject",
             "content",
         )
+
+
+class ReportCheckForm(forms.Form):
+    answer = forms.CharField(max_length=2000, label='answer')
+    violation = forms.BooleanField(label='violation')
