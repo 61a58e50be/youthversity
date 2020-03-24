@@ -6,8 +6,16 @@ python:
 # install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install pycodestyle
 
 # run tests
-script:
-  - cd youthversity
-  - python manage.py test backend
+jobs:
+  include:
+    - stage: test
+      script:
+        - cd youthversity
+        - python manage.py test backend
+    - stage: linting
+      script:
+        - cd youthversity/youthversity
+        - pycodestyle . --exclude migrations --ignore=E501,W504

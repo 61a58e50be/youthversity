@@ -143,7 +143,7 @@ def projects_filter(request):
 
     topic = request.GET.get('topic')
 
-    if topic != None:
+    if topic is not None:
         # filter for a single subject
         try:
             subject = Subject.objects.get(pk=topic)
