@@ -59,12 +59,14 @@
 
 .youthversity-comment-content {
   margin: 10px;
+  color: black;
 }
 
 .youthversity-comment-date {
   width: 49%;
   display: inline-block;
   text-align: right;
+  color: #aaa;
 }
 
 .youthversity-comment-author {
@@ -108,7 +110,7 @@
 
 .youthversity-comments-text {
   text-decoration: none;
-  color: #aaa;
+  color: black;
 }
 
 .youthversity-comments-projects-view {
@@ -118,4 +120,10 @@
 
 .youthversity-error-text {
   color: red;
+}
+
+.youthversity-project-content {
+  background-color: var(--primary-color);
+  padding: 10px;
+  color: black;
 }
