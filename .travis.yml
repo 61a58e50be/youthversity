@@ -1,7 +1,6 @@
 language: python
 python:
   - 3.6
-  - 3.7
   - 3.8
 # install dependencies
 install:
@@ -9,13 +8,7 @@ install:
   - pip install pycodestyle
 
 # run tests
-jobs:
-  include:
-    - stage: test
-      script:
-        - cd youthversity
-        - python manage.py test backend
-    - stage: linting
-      script:
-        - cd youthversity/youthversity
-        - pycodestyle . --exclude migrations --ignore=E501,W504
+script:
+  - cd youthversity
+  - python manage.py test backend
+  - pycodestyle . --exclude migrations --ignore=E501,W504
