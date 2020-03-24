@@ -125,3 +125,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CSP_DEFAULT_SRC = ["'self'"]
+
