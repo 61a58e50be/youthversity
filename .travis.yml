@@ -11,4 +11,4 @@ install:
 script:
   - cd youthversity
   - python manage.py test backend
-  - pycodestyle . --exclude migrations --ignore=W504
+  - pycodestyle . --exclude migrations --ignore=E501,W504
