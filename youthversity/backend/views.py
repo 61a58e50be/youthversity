@@ -115,7 +115,7 @@ def projects_id(request, id):
     post.save()
     context = {
         "post": post,
-        "comments": Comment.objects.filter(parent=post)
+        "comments": Comment.objects.filter(parent=post).filter(blocked=False)
     }
     return render(request, 'project.html', context)
 
@@ -214,7 +214,7 @@ def copyright(request):
 def comments_my(request):
     context = dict(
 
-        Comments=Comment.objects.filter(author=request.user.be_user)
+        Comments=Comment.objects.filter(author=request.user.be_user).filter(blocked=False)
     )
     return render(request, 'comments_my.html', context)
 
@@ -366,7 +366,7 @@ def report_comment(request, id):
     else:
         form = ReportForm()
 
-    return render(request, 'legal/report.html', {'form': form, "id": id})
+    return render(request, 'legal/report_comment.html', {'form': form, "id": id})
 
 
 def projects_popular(request):
@@ -382,6 +382,7 @@ def all_reports(request):
     return render(request, 'all_reports.html', context=context)
 
 
+@login_required
 def pending_reports(request):
     context = dict(
         reports=ViolationReport.objects.filter(done=False)
@@ -389,6 +390,7 @@ def pending_reports(request):
     return render(request, 'pending_reports.html', context=context)
 
 
+@login_required
 def reports_id(request, id):
     report = ViolationReport.objects.filter(id=id)[0]
     if request.method == 'POST':
