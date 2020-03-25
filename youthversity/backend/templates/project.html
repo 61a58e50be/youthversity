@@ -12,6 +12,11 @@
 
 
   <p> {{post.content}}</p>
+  {% if extension in imgExtensions %}
+  <img src="file" alt="Dein Browser unterstützt dieses Format leider nicht" width="100%" />
+  {% elif extension in iframeExtensions %}
+  <iframe src="file#toolbar=0" alt="Dein Browser unterstützt dieses Format leider nicht" width="100%" />
+  {%endif%}
 
   <div class="youthversity-upvote-box">
 

@@ -1,6 +1,8 @@
 from django.urls import include, path
 
 from . import views
+from youthversity import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -19,6 +21,7 @@ urlpatterns = [
     path('projects/<int:id>/upvote/', views.upvote_post, name='upvote_post'),
     path('projects/<int:id>/new_comment/',
          views.project_new_comment, name='project_new_comment'),
+    path('projects/<int:id>/file/', views.projects_file, name='projects_file'),
     path('projects/saved/', views.projects_saved, name='projects_saved'),
     path('comments/my/', views.comments_my, name='comments_my'),
     # path('help/', views.help, name='help'),
@@ -36,3 +39,6 @@ urlpatterns = [
     path('upvote_comment/<int:id>/', views.upvote_comment, name='upvote_comment'),
     path('projects/popular/', views.projects_popular, name='projects_popular'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

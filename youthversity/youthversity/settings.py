@@ -127,3 +127,6 @@ STATIC_URL = '/static/'
 CSP_DEFAULT_SRC = ["'self'"]
 CSP_STYLE_SRC = ["https://fonts.googleapis.com", "'self'"]
 CSP_FONT_SRC = ["https://fonts.gstatic.com"]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

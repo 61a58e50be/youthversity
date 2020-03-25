@@ -6,7 +6,7 @@
 
 <div class="content">
 
-  <form action="/projects/new/" method="post" class="pure-form pure-form-aligned">
+  <form action="/projects/new/" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
     <fieldset>
       {% csrf_token %}
       {% for field in form %}

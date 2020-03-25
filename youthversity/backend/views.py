@@ -5,13 +5,18 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         HttpResponseRedirect)
+                         HttpResponseRedirect, FileResponse)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .forms import CommentCreationForm, ProjectForm, ReportForm, SignUpForm
 from .models import Comment, CommentReply, Post, Subject, User, ViolationReport
 from .ownUtilities.servermail import serverStatus
+
+IMG_EXTENSIONS = ["apng", "png", "gif", "ico", "cur", "jpg", "jpeg", "jfif",
+                  "pjpg", "pjp", "png", "svg", "tif", "tiff", "webp"]
+
+IFRAME_EXTENSIONS = ["pdf", "html"]
 
 
 def signup(request):
@@ -112,11 +117,24 @@ def projects_id(request, id):
     post = Post.objects.get(pk=id)
     post.calls += 1
     post.save()
+    if post.file is not None:
+        path = post.file.name
+        extension = path.split(".")[-1]
+    else:
+        extension = ""
     context = {
         "post": post,
-        "comments": Comment.objects.filter(parent=post)
+        "comments": Comment.objects.filter(parent=post),
+        "extension": extension,
+        "imgExtensions": IMG_EXTENSIONS,
+        "iframeExtensions": IFRAME_EXTENSIONS
     }
     return render(request, 'project.html', context)
+
+
+def projects_file(request, id):
+    postFile = Post.objects.get(pk=id).file
+    return FileResponse(postFile)
 
 
 def topics(request):
@@ -280,18 +298,28 @@ def project_new_comment(request, id):
 @login_required
 def projects_new(request):
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        if form.is_valid():
+        form = ProjectForm(request.POST, request.FILES)
+        fileBoolean = len(request.FILES) != 0
+        if fileBoolean:
+            fileValidation = ((request.FILES['file'].size <= 10000000)
+                              and (request.FILES['file'].name.split(".")[-1] in IMG_EXTENSIONS+IFRAME_EXTENSIONS))
+        else:
+            fileValidation = True
+        if form.is_valid() and fileValidation:
             user = request.user.be_user
             content = form.cleaned_data.get('content')
             subject = form.cleaned_data.get('subject')
             title = form.cleaned_data.get('title')
+            if fileBoolean:
+                file = request.FILES['file']
+            else:
+                file = None
             for s in Subject.objects.all():
                 if s.name == subject:
                     subject = s
                     break
             p = Post(content=content, author=user, edited=False,
-                     type='post', subject=subject, visibility='all', title=title)
+                     type='post', subject=subject, visibility='all', title=title, file=file)
             p.save()
             return redirect(reverse('projects_id', kwargs={"id": p.id}))
     else:
