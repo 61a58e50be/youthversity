@@ -8,5 +8,5 @@ class PostMostUpvotesManager(models.Manager):
     """
 
     def get_queryset(self):
-        return super(PostMostUpvotesManager, self).get_queryset().\
+        return super(PostMostUpvotesManager, self).get_queryset(). \
             annotate(upvote_count=Count('upvotes')).order_by('-upvote_count')

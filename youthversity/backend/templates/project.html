@@ -20,34 +20,41 @@
 
   <div class="youthversity-upvote-box">
 
-    Aufrufe: {{ post.calls }}<br>
-    Sterne: {{ post.upvotes.count }}<br>
-    {% if user.be_user not in post.upvotes.all %}
-    <a class="pure-button" href="{% url 'upvote_post' post.id %}">Als Favorit markieren</a>
-    <br>
-    {% endif %}
-    {% if post not in user.be_user.saved_posts.all %}
-    <a class="pure-button" href="{% url 'save_post' post.id %}">Projekt merken</a>
-    {% endif %}
+    <div class=" pure-g youthversity-upvote-box">
+      <div class="pure-u-1 pure-u-md-1-2">
+        Aufrufe: {{ post.calls }}<br>
+        Sterne: {{ post.upvotes.count }}<br>
+      </div>
 
-  </div>
-
-
-
-
-
-  <div class="youthversity-comment-box">
-    <h3>Beiträge</h3>
-    <a class="pure-button" href="{% url 'project_new_comment' post.id %}">Neuer Beitrag</a>
-    {% for comment in comments %}
-    <div class="youthversity-comment-box-single">
-      <label class="youthversity-comment-author">{{ comment.author.name }} </label>
-      <label class="youthversity-comment-date">{{ comment.created }} </label><br>
-      <div class="youthversity-comment-content">{{ comment.content }} </div>
-      <a href="{% url 'report_comment' comment.id %}" class="youthversity-comment-report">Melden</a>
-
+      <div class="pure-u-1 pure-u-md-1-2" align="right">
+        {% if user.be_user not in post.upvotes.all %}
+        <a class="pure-button" href="{% url 'upvote_post' post.id %}">Als Favorit markieren</a>
+        <br>
+        {% endif %}
+        {% if post not in user.be_user.saved_posts.all %}
+        <a class="pure-button" href="{% url 'save_post' post.id %}">Projekt merken</a>
+        <br>
+        {% endif %}
+        <a class="pure-button" href="{% url 'report' post.id  %}">Melden</a>
+      </div>
     </div>
-    {% endfor %}
+
+
+
+
+
+    <div class="youthversity-comment-box">
+      <h3>Beiträge</h3>
+      <a class="pure-button" href="{% url 'project_new_comment' post.id %}">Neuer Beitrag</a>
+      {% for comment in comments %}
+      <div class="youthversity-comment-box-single">
+        <label class="youthversity-comment-author">{{ comment.author.name }} </label>
+        <label class="youthversity-comment-date">{{ comment.created }} </label><br>
+        <div class="youthversity-comment-content">{{ comment.content }} </div>
+        <a href="{% url 'report_comment' comment.id %}" class="youthversity-comment-report">Melden</a>
+
+      </div>
+      {% endfor %}
+    </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
