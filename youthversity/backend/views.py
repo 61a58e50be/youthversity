@@ -134,7 +134,10 @@ def projects_id(request, id):
 
 def projects_file(request, id):
     postFile = Post.objects.get(pk=id).file
-    return FileResponse(postFile)
+    if postFile.name:
+        return FileResponse(postFile)
+    else:
+        raise Http404("This project has no file attached")
 
 
 def topics(request):
