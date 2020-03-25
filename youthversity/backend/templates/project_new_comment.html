@@ -6,7 +6,7 @@
 
 <div class="content">
 
-  <form action="/projects/{{ id }}/new_comment/" method="post" class="pure-form pure-form-aligned">
+  <form action="{%  url 'project_new_comment' id %}" method="post" class="pure-form pure-form-aligned">
     <fieldset>
       {% csrf_token %}
       {% for field in form %}

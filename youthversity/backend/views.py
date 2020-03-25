@@ -2,7 +2,7 @@ import random
 from itertools import chain
 
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Count, Q
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect)
@@ -376,7 +376,7 @@ def projects_popular(request):
     return render(request, 'projects_popular.html', context=context)
 
 
-@login_required
+@permission_required('backend.mod')
 def all_reports(request):
     context = dict(reports=ViolationReport.objects.all())
     return render(request, 'all_reports.html', context=context)
