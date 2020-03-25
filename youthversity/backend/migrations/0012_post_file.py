@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('backend', '0008_post_calls'),
+        ('backend', '0011_auto_create_test_data'),
     ]
 
     operations = [
