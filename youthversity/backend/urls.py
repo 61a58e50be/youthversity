@@ -3,6 +3,9 @@ from django.urls import include, path
 from . import views
 from youthversity import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
+from ckeditor_uploader.views import upload
+from django.conf.urls import url
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -41,6 +44,8 @@ urlpatterns = [
     path('report/all/', views.all_reports, name='all_reports'),
     path('report/pending/', views.pending_reports, name='pending_reports'),
     path('report/<int:id>', views.reports_id, name='reports_id'),
+    url(r'^ckeditor/upload/', login_required(upload), name='ckeditor_upload'),
+    path('ckeditor/', include('ckeditor_uploader.urls'))
 ]
 
 if settings.DEBUG:

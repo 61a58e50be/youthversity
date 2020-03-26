@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User as AuthUser
 from django.db import models
 from .managers import PostMostUpvotesManager
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 # Create your models here.
@@ -90,6 +91,7 @@ class Post(ContentBase):
     visibility = models.CharField(max_length=10)
     calls = models.PositiveIntegerField(default=0)
     file = models.FileField(upload_to='files/', null=True)
+    content = RichTextUploadingField()
 
     def __str__(self):
         return f"Post #{self.id}: '{self.title}' by '{self.author}' in '{self.subject}'"

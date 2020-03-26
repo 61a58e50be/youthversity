@@ -11,7 +11,7 @@
 <div class="content">
 
 
-  <p> {{post.content}}</p>
+  <p> {{post.content|safe}}</p>
   {% if extension in imgExtensions %}
   <img src="file" alt="Dein Browser unterstützt dieses Format leider nicht" width="100%" />
   {% elif extension in iframeExtensions %}

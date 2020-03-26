@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from .models import Post, Subject, ViolationReport
 
@@ -37,40 +38,40 @@ class ProjectForm(forms.Form):
     title = forms.CharField(label='Titel', max_length=100)
 
     subjectChoices = [("Naturwissenschaften",
-                      (("Physik", "Physik"),
-                          ("Chemie", "Chemie"),
-                          ("Mathe", "Mathe"),
-                          ("Biologie", "Biologie"),
-                          ("Sonstige", "Sonstige"))),
+                      (("2", "Physik"),
+                          ("3", "Chemie"),
+                          ("4", "Mathe"),
+                          ("5", "Biologie"),
+                          ("6", "Sonstige"))),
                       ("Sprachen",
-                      (("Englisch", "Englisch"),
-                          ("Deutsch", "Deutsch"),
-                          ("Französisch", "Französisch"),
-                          ("Spanisch", "Spanisch"),
-                          ("Latein", "Latein"),
-                          ("Altgriechisch", "Altgriechisch"),
-                          ("Sonstige", "Sonstige"))),
+                      (("8", "Englisch"),
+                          ("9", "Deutsch"),
+                          ("10", "Französisch"),
+                          ("11", "Spanisch"),
+                          ("12", "Latein"),
+                          ("13", "Altgriechisch"),
+                          ("14", "Sonstige"))),
                       ("Gesellschaft",
-                      (("Geschichte", "Geschichte"),
-                          ("Politik", "Politik"),
-                          ("Wirtschaft", "Wirtschaft"),
-                          ("Geographie", "Geographie"),
-                          ("Sozialkunde", "Sozialkunde"),
-                          ("Sonstige", "Sonstige"))),
+                      (("16", "Geschichte"),
+                          ("17", "Politik"),
+                          ("18", "Wirtschaft"),
+                          ("19", "Geographie"),
+                          ("20", "Sozialkunde"),
+                          ("21", "Sonstige"))),
                       ("Geisteswissenschaften",
-                      (("Philosophie", "Philosophie"),
-                          ("Religion", "Religion"))),
+                      (("23", "Philosophie"),
+                          ("24", "Religion"))),
                       ("Technik",
-                      (("Informatik", "Informatik"),
-                       ("Sonstige", "Sonstige"))),
-                      ("Musik", "Musik"),
-                      ("Kunst", "Kunst"),
-                      ("Sport", "Sport"),
-                      ("Sonstige", "Sonstige")]
+                      (("26", "Informatik"),
+                       ("27", "Sonstige"))),
+                      ("28", "Musik"),
+                      ("29", "Kunst"),
+                      ("30", "Sport"),
+                      ("31", "Sonstige")]
 
     subject = forms.CharField(
         label='Thema', widget=forms.Select(choices=subjectChoices))
-    content = forms.CharField(label='Text', widget=forms.Textarea)
+    content = forms.CharField(widget=CKEditorUploadingWidget())
     file = forms.FileField(required=False)
     check = forms.BooleanField(label="Ich versichere, dass alle Inhalte mein geistiges Eigentum sind oder mit "
                                      + "Erlaubnis des Erstellers verwendet werden und Quellen korrekt zitiert wurden")

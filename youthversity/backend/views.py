@@ -318,10 +318,7 @@ def projects_new(request):
                 file = request.FILES['file']
             else:
                 file = None
-            for s in Subject.objects.all():
-                if s.name == subject:
-                    subject = s
-                    break
+            subject = Subject.objects.get(pk=subject)
             p = Post(content=content, author=user, edited=False,
                      type='post', subject=subject, visibility='all', title=title, file=file)
             p.save()
