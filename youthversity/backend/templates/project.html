@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <div class="header">
   <h1>{{ post.title }}</h1>
   <h2>By {{ post.author.name }}</h2>
+  {% static "topics_small" as topics_small_base %}
+  <img src="{{ topics_small_base }}/{{ post.subject.get_parent.name }}.png" class="pure-img youthversity-post-id-subject" alt="{{post.subject.get_parent.name}} - {{post.subject.name}}" title="{{post.subject.get_parent.name}} - {{post.subject.name}}">
   {% if post.edited %}
   <h3>edited</h3>
   {% endif %}
