@@ -12,6 +12,7 @@ from django.urls import reverse
 from .forms import CommentCreationForm, ProjectForm, ReportForm, SignUpForm, ReportCheckForm
 from .models import Comment, CommentReply, Post, Subject, User, ViolationReport
 from .ownUtilities.servermail import serverStatus
+from csp.decorators import csp_update
 
 IMG_EXTENSIONS = ["apng", "png", "gif", "ico", "cur", "jpg", "jpeg", "jfif",
                   "pjpg", "pjp", "png", "svg", "tif", "tiff", "webp"]
@@ -299,6 +300,7 @@ def project_new_comment(request, id):
     return render(request, 'project_new_comment.html', {'form': form, "id": id})
 
 
+@csp_update(DEFAULT_SRC= "'none'", CONNECT_SRC="'self'", SCRIPT_SRC=["'self'", "'unsafe-inline'"], IMG_SRC="*", STYLE_SRC=["'self'", "'unsafe-inline'"], FRAME_SRC="*")
 @login_required
 def projects_new(request):
     if request.method == 'POST':
