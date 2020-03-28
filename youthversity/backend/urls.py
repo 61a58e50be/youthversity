@@ -19,6 +19,7 @@ urlpatterns = [
     path('projects/my/', views.projects_my, name='projects_my'),
     path('projects/new/', views.projects_new, name='projects_new'),
     path('projects/<int:id>/', views.projects_id, name='projects_id'),
+    path('projects/<int:id>/edit', views.projects_edit, name='projects_edit'),
     path('projects/<int:id>/save/', views.save_project, name='save_post'),
     path('projects/<int:id>/report/', views.report, name='report'),
     path('projects/<int:id>/upvote/', views.upvote_post, name='upvote_post'),

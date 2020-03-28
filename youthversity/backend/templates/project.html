@@ -6,6 +6,9 @@
   {% if post.edited %}
   <h3>edited</h3>
   {% endif %}
+  {% if author %}
+  <a class="pure-button" href="{% url 'projects_edit' post.id %}">Projekt bearbeiten</a>
+  {% endif %}
 </div>
 
 <div class="content">

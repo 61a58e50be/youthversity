@@ -115,10 +115,11 @@ def feed(request):
 
 def projects_id(request, id):
     if Post.objects.filter(pk=id)[0].blocked:
-        return HttpResponse('Dieses projekt wurde auf Grund von Verstößen gegen unsere Nutzungsrichtlinie gesperrt')
+        return HttpResponse('Dieses Projekt wurde auf Grund von Verstößen gegen unsere Nutzungsrichtlinie gesperrt')
     post = Post.objects.get(pk=id)
     post.calls += 1
     post.save()
+    author = (post.author == request.user.be_user)
     if post.file is not None:
         path = post.file.name
         extension = path.split(".")[-1]
@@ -129,7 +130,8 @@ def projects_id(request, id):
         "comments": Comment.objects.filter(parent=post),
         "extension": extension,
         "imgExtensions": IMG_EXTENSIONS,
-        "iframeExtensions": IFRAME_EXTENSIONS
+        "iframeExtensions": IFRAME_EXTENSIONS,
+        "author": author
     }
     return render(request, 'project.html', context)
 
@@ -329,6 +331,46 @@ def projects_new(request):
         form = ProjectForm()
     context = {'form': form}
     return render(request, 'projects_new.html', context)
+
+
+@csp_update(DEFAULT_SRC= "'none'", CONNECT_SRC="'self'", SCRIPT_SRC=["'self'", "'unsafe-inline'"], IMG_SRC="*", STYLE_SRC=["'self'", "'unsafe-inline'"], FRAME_SRC="*")
+@login_required
+def projects_edit(request, id):
+    post = Post.objects.get(pk=id)
+    if post.author == request.user.be_user:
+        if request.method == 'POST':
+            form = ProjectForm(request.POST, request.FILES)
+            fileBoolean = len(request.FILES) != 0
+            if fileBoolean:
+                fileValidation = ((request.FILES['file'].size <= 10000000)
+                                  and (request.FILES['file'].name.split(".")[-1] in IMG_EXTENSIONS+IFRAME_EXTENSIONS))
+            else:
+                fileValidation = True
+            if form.is_valid() and fileValidation:
+                user = request.user.be_user
+                content = form.cleaned_data.get('content')
+                subject = form.cleaned_data.get('subject')
+                title = form.cleaned_data.get('title')
+                if fileBoolean:
+                    file = request.FILES['file']
+                else:
+                    file = None
+                subject = Subject.objects.get(pk=subject)
+                post.content = content
+                post.author = user
+                post.edited = True
+                post.subject = subject
+                post.title = title
+                post.file = file
+                post.save()
+                return redirect(reverse('projects_id', kwargs={"id": post.id}))
+        else:
+            form = ProjectForm()
+        context = {'form': form,
+                   'post': post}
+        return render(request, 'projects_edit.html', context)
+    else:
+        return HttpResponse("403 - Du darfst diesen Artikel nicht bearbeiten")
 
 
 @login_required

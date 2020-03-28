@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<div class="header">
+  <h1>Projekt bearbeiten</h1>
+</div>
+
+<div class="content">
+
+  <form action="/projects/{{post.id}}/edit" method="post" enctype="multipart/form-data" class="pure-form pure-form-aligned">
+    <fieldset>
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="pure-control-group">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+        <span class="pure-form-message-inline">{{ field.help_text }}</span>
+        {% endif %}
+        {% for error in field.errors %}
+        <p class="youthversity-error-text">{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endfor %}
+      <div class="pure-controls">
+        <input type="submit" value="Submit" class="pure-button pure-button-primary">
+      </div>
+    </fieldset>
+  </form>
+
+</div>
+
+{% endblock %}
